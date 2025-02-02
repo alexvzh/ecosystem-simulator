@@ -1,5 +1,7 @@
 package fortyfour.group.entity;
 
+import java.awt.*;
+
 public abstract class Entity {
 
     private int x, y;
@@ -8,6 +10,9 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
     }
+
+    public abstract void update();
+    public abstract void draw(Graphics2D g2d);
 
     public int getX() {
         return x;
