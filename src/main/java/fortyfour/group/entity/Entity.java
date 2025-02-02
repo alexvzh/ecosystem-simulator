@@ -6,9 +6,11 @@ public abstract class Entity {
 
     private int x, y;
 
-    public Entity(int x, int y) {
+    public Entity(int x, int y, EntityHandler entityHandler) {
         this.x = x;
         this.y = y;
+
+        entityHandler.addEntity(this);
     }
 
     public abstract void update();
