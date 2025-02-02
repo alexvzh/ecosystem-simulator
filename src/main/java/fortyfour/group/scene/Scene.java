@@ -1,5 +1,7 @@
 package fortyfour.group.scene;
 
+import fortyfour.group.entity.EntityHandler;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,7 @@ public abstract class Scene extends JPanel implements Runnable {
 
     Thread thread;
     boolean running;
+    EntityHandler entityHandler;
 
     public Scene() {
 
@@ -15,6 +18,8 @@ public abstract class Scene extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.setLayout(null);
+
+        this.entityHandler = new EntityHandler();
 
         startThread();
 
@@ -82,5 +87,9 @@ public abstract class Scene extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public EntityHandler getEntityHandler() {
+        return entityHandler;
     }
 }
