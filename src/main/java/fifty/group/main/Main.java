@@ -1,6 +1,6 @@
-package fortyfour.group.main;
+package fifty.group.main;
 
-import fortyfour.group.scene.scenes.MenuScene;
+import fifty.group.scene.scenes.MenuScene;
 
 import javax.swing.*;
 

@@ -1,6 +1,6 @@
-package fortyfour.group.scene;
+package fifty.group.scene;
 
-import fortyfour.group.entity.EntityHandler;
+import fifty.group.entity.EntityHandler;
 
 import javax.swing.*;
 import java.awt.*;

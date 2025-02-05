@@ -1,4 +1,4 @@
-package fortyfour.group.entity;
+package fifty.group.entity;
 
 import java.awt.*;
 import java.util.ArrayList;

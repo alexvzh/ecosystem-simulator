@@ -1,6 +1,6 @@
-package fortyfour.group.scene.scenes;
+package fifty.group.scene.scenes;
 
-import fortyfour.group.scene.Scene;
+import fifty.group.scene.Scene;
 
 import java.awt.*;
 
@@ -8,7 +8,7 @@ public class MenuScene extends Scene {
 
     @Override
     public void update() {
-
+        getEntityHandler().update();
     }
 
     @Override
