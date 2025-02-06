@@ -38,12 +38,13 @@ public abstract class Scene extends JPanel implements Runnable {
     }
 
     public abstract void update();
+
     public abstract void draw(Graphics2D g2d);
 
     @Override
     public void run() {
         final int TARGET_FPS = 60; // Frames per second
-        final int TARGET_UPS = 60; // Updates per second
+        final int TARGET_UPS = 10; // Updates per second
         final double TIME_PER_UPDATE = 1_000_000_000.0 / TARGET_UPS; // Nanoseconds per update
         final double TIME_PER_FRAME = 1_000_000_000.0 / TARGET_FPS; // Nanoseconds per frame
 

@@ -1,12 +1,12 @@
 package fifty.group.main;
 
+import fifty.group.entity.entities.ExampleEntity;
 import fifty.group.scene.scenes.MenuScene;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-
 
         JFrame window = new JFrame();
 
