@@ -10,6 +10,7 @@ public abstract class Scene extends JPanel implements Runnable {
     Thread thread;
     boolean running;
     EntityHandler entityHandler;
+    SceneID sceneID;
 
     public Scene() {
 
@@ -92,5 +93,13 @@ public abstract class Scene extends JPanel implements Runnable {
 
     public EntityHandler getEntityHandler() {
         return entityHandler;
+    }
+
+    public SceneID getID() {
+        return sceneID;
+    }
+
+    public void setID(SceneID sceneID) {
+        this.sceneID = sceneID;
     }
 }
