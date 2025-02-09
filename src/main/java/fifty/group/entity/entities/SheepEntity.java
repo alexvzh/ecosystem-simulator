@@ -34,6 +34,7 @@ public class SheepEntity extends Entity {
     private int spriteSheetTileY = 0;
     private Direction direction;
     private int frame = 0;
+    private boolean isIdle = false;
 
     static {
         try {
@@ -110,19 +111,21 @@ public class SheepEntity extends Entity {
 
     @Override
     public void update() {
-        switch (direction) {
-            case DOWN:
-                setY(getY() + 5);
-                break;
-            case LEFT:
-                setX(getX() - 5);
-                break;
-            case RIGHT:
-                setX(getX() + 5);
-                break;
-            case UP:
-                setY(getY() - 5);
-                break;
+        if (!isIdle) {
+            switch (direction) {
+                case DOWN:
+                    setY(getY() + 5);
+                    break;
+                case LEFT:
+                    setX(getX() - 5);
+                    break;
+                case RIGHT:
+                    setX(getX() + 5);
+                    break;
+                case UP:
+                    setY(getY() - 5);
+                    break;
+            }
         }
 
         frame++;
@@ -130,7 +133,8 @@ public class SheepEntity extends Entity {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(getFrameImage(frame % 3), getX(), getY(), null);
+        int frameIndex = isIdle ? 1 : frame % 3;
+        g2d.drawImage(getFrameImage(frameIndex), getX(), getY(), null);
     }
 
 }
