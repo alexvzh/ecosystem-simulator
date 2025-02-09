@@ -10,15 +10,32 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SheepEntity extends Entity {
+
     public enum Type {
-        WHITE_BLACK,
-        WHITE_GRAY,
-        BLACK_GRAY,
-        DARK_BROWN_GRAY,
-        BLACK_BLACK,
-        WHITE_WHITE,
-        GRAY_BLACK,
-        LIGHT_BROWN_BLACK,
+        WHITE_BLACK(0, 0),
+        WHITE_GRAY(3, 0),
+        BLACK_GRAY(6, 0),
+        DARK_BROWN_GRAY(9, 0),
+        BLACK_BLACK(0, 4),
+        WHITE_WHITE(3, 4),
+        GRAY_BLACK(6, 4),
+        LIGHT_BROWN_BLACK(9, 4);
+
+        private final int x;
+        private final int y;
+
+        Type (int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
     }
 
     public enum Direction {
@@ -49,41 +66,9 @@ public class SheepEntity extends Entity {
         super(x, y, entityHandler);
 
         this.direction = direction;
+        this.spriteSheetTileX = type.getX();
+        this.spriteSheetTileY = type.getY();
 
-        switch (type) {
-            case WHITE_BLACK:
-                spriteSheetTileX = 0;
-                spriteSheetTileY = 0;
-                break;
-            case WHITE_GRAY:
-                spriteSheetTileX = 3;
-                spriteSheetTileY = 0;
-                break;
-            case BLACK_GRAY:
-                spriteSheetTileX = 6;
-                spriteSheetTileY = 0;
-                break;
-            case DARK_BROWN_GRAY:
-                spriteSheetTileX = 9;
-                spriteSheetTileY = 0;
-                break;
-            case BLACK_BLACK:
-                spriteSheetTileX = 0;
-                spriteSheetTileY = 4;
-                break;
-            case WHITE_WHITE:
-                spriteSheetTileX = 3;
-                spriteSheetTileY = 4;
-                break;
-            case GRAY_BLACK:
-                spriteSheetTileX = 6;
-                spriteSheetTileY = 4;
-                break;
-            case LIGHT_BROWN_BLACK:
-                spriteSheetTileX = 9;
-                spriteSheetTileY = 4;
-                break;
-        }
     }
 
     public BufferedImage getFrameImage(int walkingFrameIndex) {
