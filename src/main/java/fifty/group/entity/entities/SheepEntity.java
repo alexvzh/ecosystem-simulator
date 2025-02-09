@@ -1,0 +1,136 @@
+package fifty.group.entity.entities;
+
+import fifty.group.entity.Entity;
+import fifty.group.entity.EntityHandler;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
+
+public class SheepEntity extends Entity {
+    public enum Type {
+        WHITE_BLACK,
+        WHITE_GRAY,
+        BLACK_GRAY,
+        DARK_BROWN_GRAY,
+        BLACK_BLACK,
+        WHITE_WHITE,
+        GRAY_BLACK,
+        LIGHT_BROWN_BLACK,
+    }
+
+    public enum Direction {
+        DOWN,
+        LEFT,
+        RIGHT,
+        UP,
+    }
+
+    private final static int TILE_SIZE = 48;
+    private final static BufferedImage IMAGE;
+    private int spriteSheetTileX = 0;
+    private int spriteSheetTileY = 0;
+    private Direction direction;
+    private int frame = 0;
+
+    static {
+        try {
+            IMAGE = ImageIO.read(Objects.requireNonNull(SheepEntity.class.getResourceAsStream("/Sheep.png")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public SheepEntity(int x, int y, EntityHandler entityHandler, Type type, Direction direction) {
+        super(x, y, entityHandler);
+
+        this.direction = direction;
+
+        switch (type) {
+            case WHITE_BLACK:
+                spriteSheetTileX = 0;
+                spriteSheetTileY = 0;
+                break;
+            case WHITE_GRAY:
+                spriteSheetTileX = 3;
+                spriteSheetTileY = 0;
+                break;
+            case BLACK_GRAY:
+                spriteSheetTileX = 6;
+                spriteSheetTileY = 0;
+                break;
+            case DARK_BROWN_GRAY:
+                spriteSheetTileX = 9;
+                spriteSheetTileY = 0;
+                break;
+            case BLACK_BLACK:
+                spriteSheetTileX = 0;
+                spriteSheetTileY = 4;
+                break;
+            case WHITE_WHITE:
+                spriteSheetTileX = 3;
+                spriteSheetTileY = 4;
+                break;
+            case GRAY_BLACK:
+                spriteSheetTileX = 6;
+                spriteSheetTileY = 4;
+                break;
+            case LIGHT_BROWN_BLACK:
+                spriteSheetTileX = 9;
+                spriteSheetTileY = 4;
+                break;
+        }
+    }
+
+    public BufferedImage getFrameImage(int walkingFrameIndex) {
+        int localYOffset = 0;
+
+        switch (direction) {
+            case LEFT:
+                localYOffset = 1;
+                break;
+            case RIGHT:
+                localYOffset = 2;
+                break;
+            case UP:
+                localYOffset = 3;
+                break;
+        }
+
+        return IMAGE.getSubimage(
+                (spriteSheetTileX + walkingFrameIndex) * TILE_SIZE,
+                (spriteSheetTileY + localYOffset) * TILE_SIZE,
+                TILE_SIZE,
+                TILE_SIZE
+        );
+    }
+
+    @Override
+    public void update() {
+        switch (direction) {
+            case DOWN:
+                setY(getY() + 5);
+                break;
+            case LEFT:
+                setX(getX() - 5);
+                break;
+            case RIGHT:
+                setX(getX() + 5);
+                break;
+            case UP:
+                setY(getY() - 5);
+                break;
+        }
+
+        frame++;
+    }
+
+    @Override
+    public void draw(Graphics2D g2d) {
+        g2d.drawImage(getFrameImage(frame % 3), getX(), getY(), null);
+    }
+
+}
