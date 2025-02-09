@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'fifty.group'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
