@@ -4,7 +4,7 @@ import java.awt.*;
 
 public abstract class Entity {
 
-    private int x, y;
+    protected int x, y;
 
     public Entity(int x, int y, EntityHandler entityHandler) {
         this.x = x;
