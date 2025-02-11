@@ -5,6 +5,7 @@ import fifty.group.scene.Scene;
 import fifty.group.scene.SceneID;
 
 import java.awt.*;
+import java.util.Random;
 
 import static fifty.group.entity.entities.SheepEntity.*;
 
@@ -13,7 +14,9 @@ public class MenuScene extends Scene {
 
     public MenuScene() {
         setID(SceneID.MENU);
-        myEntity = new SheepEntity(0, 100, getEntityHandler(), Type.LIGHT_BROWN_BLACK);
+        int randX = new Random().nextInt(640);
+        int randY = new Random().nextInt(640);
+        myEntity = new SheepEntity(randX, randY, getEntityHandler(), Type.LIGHT_BROWN_BLACK);
     }
 
     @Override
