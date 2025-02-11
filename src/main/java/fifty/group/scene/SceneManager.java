@@ -1,6 +1,7 @@
 package fifty.group.scene;
 
 import fifty.group.scene.scenes.MenuScene;
+import fifty.group.scene.scenes.SimulationScene;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class SceneManager {
 
     private void initScenes() {
         scenes.add(new MenuScene());
+        scenes.add(new SimulationScene());
     }
 
     public static SceneManager getInstance() {
