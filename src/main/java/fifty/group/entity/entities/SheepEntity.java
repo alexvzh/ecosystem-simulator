@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public class SheepEntity extends Entity {
 
@@ -24,7 +25,7 @@ public class SheepEntity extends Entity {
         private final int x;
         private final int y;
 
-        Type (int x, int y) {
+        Type(int x, int y) {
             this.x = x;
             this.y = y;
         }
@@ -52,6 +53,8 @@ public class SheepEntity extends Entity {
     private Direction direction;
     private int frame = 0;
     private boolean isIdle = false;
+    private Direction directionArr[] = {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP};
+    private int randInt = new Random().nextInt(4);
 
     static {
         try {
@@ -62,10 +65,10 @@ public class SheepEntity extends Entity {
     }
 
 
-    public SheepEntity(int x, int y, EntityHandler entityHandler, Type type, Direction direction) {
+    public SheepEntity(int x, int y, EntityHandler entityHandler, Type type) {
         super(x, y, entityHandler);
 
-        this.direction = direction;
+        this.direction = directionArr[randInt];
         this.spriteSheetTileX = type.getX();
         this.spriteSheetTileY = type.getY();
 
