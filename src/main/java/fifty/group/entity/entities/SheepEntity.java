@@ -52,9 +52,9 @@ public class SheepEntity extends Entity {
     private int spriteSheetTileY = 0;
     private Direction direction;
     private int frame = 0;
-    private boolean isIdle = false;
     private Direction directionArr[] = {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP};
     private int randInt = new Random().nextInt(4);
+    private boolean isIdle = randInt > 2;
 
     static {
         try {

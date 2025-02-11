@@ -13,7 +13,7 @@ public class MenuScene extends Scene {
 
     public MenuScene() {
         setID(SceneID.MENU);
-        myEntity = new SheepEntity(0, 100, getEntityHandler(), Type.LIGHT_BROWN_BLACK, Direction.RIGHT);
+        myEntity = new SheepEntity(0, 100, getEntityHandler(), Type.LIGHT_BROWN_BLACK);
     }
 
     @Override
