@@ -23,5 +23,7 @@ public class Main {
 
         window.setVisible(true);
 
+        SceneManager.getInstance().setScene(SceneID.SIMULATION);
+
     }
 }
