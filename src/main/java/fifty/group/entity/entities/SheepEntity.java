@@ -4,7 +4,10 @@ import fifty.group.entity.Entity;
 import fifty.group.entity.EntityHandler;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -56,6 +59,7 @@ public class SheepEntity extends Entity {
     private int randInt = new Random().nextInt(4);
     private boolean isIdle = randInt > 2;
 
+
     static {
         try {
             IMAGE = ImageIO.read(Objects.requireNonNull(SheepEntity.class.getResourceAsStream("/Sheep.png")));
@@ -71,6 +75,16 @@ public class SheepEntity extends Entity {
         this.direction = directionArr[randInt];
         this.spriteSheetTileX = type.getX();
         this.spriteSheetTileY = type.getY();
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                randInt = new Random().nextInt(4);
+                isIdle = randInt > 2;
+                direction = directionArr[randInt];
+            }
+        });
+        timer.setRepeats(true);
+        timer.start();
 
     }
 
