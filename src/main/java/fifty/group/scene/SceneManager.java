@@ -24,7 +24,8 @@ public class SceneManager {
         instance = this;
     }
 
-    public void setScene(Scene scene) {
+    public void setScene(SceneID sceneID) {
+        Scene scene = this.getSceneByID(sceneID);
         window.remove(currentScene);
         window.add(scene);
         window.pack();
