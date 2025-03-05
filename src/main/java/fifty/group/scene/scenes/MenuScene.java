@@ -16,7 +16,7 @@ public class MenuScene extends Scene {
         setID(SceneID.MENU);
         int randX = new Random().nextInt(640);
         int randY = new Random().nextInt(640);
-        myEntity = new SheepEntity(randX, randY, getEntityHandler(), Type.LIGHT_BROWN_BLACK);
+        myEntity = new SheepEntity(randX, randY, getEntityHandler(), Type.BLACK_GRAY);
     }
 
     @Override

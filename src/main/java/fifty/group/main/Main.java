@@ -2,7 +2,6 @@ package fifty.group.main;
 
 import fifty.group.scene.SceneID;
 import fifty.group.scene.SceneManager;
-import fifty.group.scene.scenes.MenuScene;
 
 import javax.swing.*;
 
@@ -10,8 +9,6 @@ public class Main {
     public static void main(String[] args) {
 
         JFrame window = new JFrame();
-
-        new SceneManager(window);
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -24,6 +21,7 @@ public class Main {
         window.setVisible(true);
 
         SceneManager.getInstance().setScene(SceneID.SIMULATION);
+        SceneManager.getInstance().start();
 
     }
 }
