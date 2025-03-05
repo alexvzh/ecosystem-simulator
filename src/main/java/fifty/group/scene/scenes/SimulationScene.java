@@ -43,17 +43,4 @@ public class SimulationScene extends Scene {
 
     }
 
-
-    private BufferedImage getResizedSprite(int x, int y) {
-        BufferedImage original = TILE_MAP.getSubimage(x*16, y*16, 16, 16);
-        int size = 32;
-
-        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = image.createGraphics();
-        g2d.drawImage(original.getScaledInstance(size, size, Image.SCALE_SMOOTH), 0, 0, null);
-        g2d.dispose();
-
-        return image;
-    }
-
 }
