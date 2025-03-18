@@ -1,6 +1,6 @@
 package fifty.group.sprite;
 
-import fifty.group.map.TileType;
+import fifty.group.terrain.TileType;
 import fifty.group.scene.scenes.SimulationScene;
 
 import javax.imageio.ImageIO;

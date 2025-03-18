@@ -1,4 +1,4 @@
-package fifty.group.map;
+package fifty.group.terrain;
 
 public enum TileType {
     GRASS,

@@ -11,19 +11,16 @@ public class SceneManager {
     private static SceneManager instance;
 
     private final ArrayList<Scene> scenes;
-    private final JFrame window;
+    private JFrame window;
     private Scene currentScene;
     private boolean running = true;
 
-    public SceneManager(JFrame window) {
-        this.window = window;
+    private SceneManager() {
         this.scenes = new ArrayList<>();
 
         initScenes();
 
         currentScene = getSceneByID(SceneID.MENU);
-
-        instance = this;
     }
 
     public void start() {
@@ -81,10 +78,12 @@ public class SceneManager {
         window.remove(currentScene);
         window.add(scene);
         window.pack();
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
         currentScene = scene;
     }
 
-    public Scene getSceneByID(SceneID sceneID) {
+    private Scene getSceneByID(SceneID sceneID) {
         for (Scene scene : scenes) {
             if (scene.getID().equals(sceneID)) {
                 return scene;
@@ -102,8 +101,14 @@ public class SceneManager {
         scenes.add(new SimulationScene());
     }
 
+    public void initialize(JFrame window) {
+        this.window = window;
+    }
+
     public static SceneManager getInstance() {
+        if (instance == null) {
+            instance = new SceneManager();
+        }
         return instance;
     }
-    
 }

@@ -7,12 +7,12 @@ import java.awt.*;
 
 public abstract class Scene extends JPanel {
 
-    EntityHandler entityHandler;
-    SceneID sceneID;
+    private final EntityHandler entityHandler;
+    private SceneID sceneID;
 
-    public Scene() {
+    protected Scene() {
 
-        this.setPreferredSize(new Dimension(640, 640));
+        this.setPreferredSize(new Dimension(1400, 800));
         this.setBackground(Color.GRAY);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
@@ -22,25 +22,26 @@ public abstract class Scene extends JPanel {
 
     }
 
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         draw(g2d);
     }
 
-    public abstract void update();
+    protected abstract void update();
 
-    public abstract void draw(Graphics2D g2d);
+    protected abstract void draw(Graphics2D g2d);
 
-    public EntityHandler getEntityHandler() {
+    protected EntityHandler getEntityHandler() {
         return entityHandler;
     }
 
-    public SceneID getID() {
+    protected SceneID getID() {
         return sceneID;
     }
 
-    public void setID(SceneID sceneID) {
+    protected void setID(SceneID sceneID) {
         this.sceneID = sceneID;
     }
 }

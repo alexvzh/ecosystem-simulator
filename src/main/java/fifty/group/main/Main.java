@@ -14,11 +14,7 @@ public class Main {
         window.setResizable(false);
         window.setTitle("ecosystem-simulator");
 
-        window.getContentPane().add(SceneManager.getInstance().getSceneByID(SceneID.MENU));
-        window.pack();
-        window.setLocationRelativeTo(null);
-
-        window.setVisible(true);
+        SceneManager.getInstance().initialize(window);
 
         SceneManager.getInstance().setScene(SceneID.SIMULATION);
         SceneManager.getInstance().start();
