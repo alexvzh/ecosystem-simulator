@@ -102,10 +102,6 @@ public abstract class LiveEntity extends Entity {
         double magnitude = Math.sqrt(velX * velX + velY * velY);
         velX /= magnitude;
         velY /= magnitude;
-
-        System.out.print(velX);
-        System.out.println(" " + velY);
-
     }
 
 
