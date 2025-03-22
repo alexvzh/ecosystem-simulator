@@ -4,31 +4,30 @@ import java.awt.*;
 
 public abstract class Entity {
 
-    protected int x, y;
+    protected double x, y;
 
-    public Entity(int x, int y, EntityHandler entityHandler) {
+    public Entity(double x, double y, EntityHandler entityHandler) {
         this.x = x;
         this.y = y;
 
         entityHandler.addEntity(this);
     }
 
-    public abstract void update();
     public abstract void draw(Graphics2D g2d);
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 }

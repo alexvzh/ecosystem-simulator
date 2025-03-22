@@ -1,22 +1,22 @@
 package fifty.group.scene.scenes;
 
-import fifty.group.entity.entities.SheepEntity;
+import fifty.group.entity.entities.Sheep;
 import fifty.group.scene.Scene;
 import fifty.group.scene.SceneID;
 
 import java.awt.*;
 import java.util.Random;
 
-import static fifty.group.entity.entities.SheepEntity.*;
+import static fifty.group.entity.entities.Sheep.*;
 
 public class MenuScene extends Scene {
-    SheepEntity myEntity;
+    Sheep myEntity;
 
     public MenuScene() {
         setID(SceneID.MENU);
         int randX = new Random().nextInt(640);
         int randY = new Random().nextInt(640);
-        myEntity = new SheepEntity(randX, randY, getEntityHandler(), Type.BLACK_GRAY);
+        myEntity = new Sheep(randX, randY, getEntityHandler(), Type.BLACK_GRAY);
     }
 
     @Override

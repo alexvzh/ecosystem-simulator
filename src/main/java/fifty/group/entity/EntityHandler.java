@@ -13,7 +13,10 @@ public class EntityHandler {
 
     public void update() {
         for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).update();
+            if (!(entities.get(i) instanceof LiveEntity)) continue;
+            LiveEntity entity = (LiveEntity) entities.get(i);
+            entity.updateEntity();
+
         }
     }
 

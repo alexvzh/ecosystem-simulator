@@ -1,8 +1,8 @@
 package fifty.group.scene.scenes;
 
-import fifty.group.entity.entities.SheepEntity;
+import fifty.group.entity.entities.Sheep;
+import fifty.group.entity.entities.TempSheep;
 import fifty.group.terrain.Terrain;
-import fifty.group.terrain.TileType;
 import fifty.group.scene.Scene;
 import fifty.group.scene.SceneID;
 
@@ -16,7 +16,8 @@ public class SimulationScene extends Scene {
         setID(SceneID.SIMULATION);
 
         terrain = new Terrain();
-        new SheepEntity(50, 50, getEntityHandler(), SheepEntity.Type.GRAY_BLACK);
+//        new Sheep(50, 50, getEntityHandler(), Sheep.Type.GRAY_BLACK);
+        new TempSheep(320, 240, getEntityHandler());
 
     }
 
