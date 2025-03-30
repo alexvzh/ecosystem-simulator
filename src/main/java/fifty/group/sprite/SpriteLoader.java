@@ -16,6 +16,7 @@ public class SpriteLoader {
 
     private final BufferedImage TILE_MAP;
     private HashMap<List<TileType>, BufferedImage> spriteMap;
+    private static SpriteLoader instance;
 
     public SpriteLoader() {
         try {
@@ -62,5 +63,12 @@ public class SpriteLoader {
 
     public HashMap<List<TileType>, BufferedImage> getSpriteMap() {
         return spriteMap;
+    }
+
+    public static SpriteLoader getInstance() {
+        if (instance == null) {
+            instance = new SpriteLoader();
+        }
+        return instance;
     }
 }

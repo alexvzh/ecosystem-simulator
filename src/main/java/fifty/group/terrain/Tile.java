@@ -1,26 +1,40 @@
 package fifty.group.terrain;
 
+import com.google.gson.annotations.*;
 import fifty.group.entity.entities.Grass;
 import fifty.group.scene.SceneManager;
+import fifty.group.sprite.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 
 public class Tile {
 
+    @Expose
     private final int x;
+
+    @Expose
     private final int y;
-    private final BufferedImage image;
-    private final Random random;
-    private Grass currentGrass;
+
+    @Expose
     private TileType type;
 
-    public Tile(int x, int y, TileType type, BufferedImage image) {
+    @Expose
+    private List<TileType> neighbors;
+
+    private Grass currentGrass;
+    private final BufferedImage image;
+    private final Random random;
+
+    public Tile(int x, int y, TileType type, List<TileType> neighbors) {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.image = image;
+        this.neighbors = neighbors;
+
+        this.image = SpriteLoader.getInstance().getSpriteMap().get(this.neighbors);
         this.random = new Random();
     }
 

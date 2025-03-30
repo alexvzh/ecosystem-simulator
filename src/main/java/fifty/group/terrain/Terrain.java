@@ -1,16 +1,14 @@
 package fifty.group.terrain;
 
-import fifty.group.sprite.SpriteLoader;
+import com.google.gson.annotations.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 public class Terrain {
 
+    @Expose
     private final ArrayList<Tile> tileList;
 
     public Terrain() {
@@ -28,15 +26,13 @@ public class Terrain {
     private void initTiles() {
         int[][] integerList = generateRandomMap(45, 26);
 
-        SpriteLoader spriteLoader = new SpriteLoader();
-        HashMap<List<TileType>, BufferedImage> spriteMap = spriteLoader.getSpriteMap();
         int x = 0;
         int y = 0;
 
         for (int i = 0; i < integerList.length-1; i++) {
             for (int j = 0; j < integerList[i].length-1; j++) {
                 TileType type = integerList[i][j] == 1 ? TileType.GRASS : TileType.DIRT;
-                tileList.add(new Tile(x, y, type, spriteMap.get(getTileNeighbours(i, j, integerList))));
+                tileList.add(new Tile(x, y, type, getTileNeighbours(i, j, integerList)));
                 x += 32;
             }
             y += 32;
