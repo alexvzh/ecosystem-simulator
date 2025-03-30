@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class Terrain {
 
@@ -25,45 +26,38 @@ public class Terrain {
     }
 
     private void initTiles() {
-        int[][] integerMap = new int[][]{
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1},
-                {1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-                {1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        };
+        int[][] integerList = generateRandomMap(45, 26);
 
         SpriteLoader spriteLoader = new SpriteLoader();
         HashMap<List<TileType>, BufferedImage> spriteMap = spriteLoader.getSpriteMap();
         int x = 0;
         int y = 0;
 
-        for (int i = 0; i < integerMap.length-1; i++) {
-            for (int j = 0; j < integerMap[i].length-1; j++) {
-                tileList.add(new Tile(x, y, spriteMap.get(getTileNeighbours(i, j, integerMap))));
+        for (int i = 0; i < integerList.length-1; i++) {
+            for (int j = 0; j < integerList[i].length-1; j++) {
+                TileType type = integerList[i][j] == 1 ? TileType.GRASS : TileType.DIRT;
+                tileList.add(new Tile(x, y, type, spriteMap.get(getTileNeighbours(i, j, integerList))));
                 x += 32;
             }
             y += 32;
             x = 0;
         }
 
+    }
+
+    public int[][] generateRandomMap(int width, int height) {
+        int[][] map = new int[height][width];
+        Random random = new Random();
+
+        int probability = 30 + random.nextInt(41);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                map[y][x] = (random.nextInt(100) < probability) ? 1 : 0;
+            }
+        }
+
+        return map;
     }
 
     private java.util.List<TileType> getTileNeighbours(int y, int x, int[][] integerMap) {
@@ -74,5 +68,12 @@ public class Terrain {
         neighbours.add(integerMap[y+1][x+1] == 1 ? TileType.GRASS : TileType.DIRT);
 
         return neighbours;
+    }
+
+    public Tile getTile(int x, int y) {
+        for (Tile tile : tileList) {
+            if (tile.getBounds().contains(x, y)) return tile;
+        }
+        return null;
     }
 }

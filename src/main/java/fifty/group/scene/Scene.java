@@ -33,7 +33,7 @@ public abstract class Scene extends JPanel {
 
     protected abstract void draw(Graphics2D g2d);
 
-    protected EntityHandler getEntityHandler() {
+    public EntityHandler getEntityHandler() {
         return entityHandler;
     }
 

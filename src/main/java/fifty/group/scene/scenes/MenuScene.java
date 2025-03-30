@@ -1,22 +1,17 @@
 package fifty.group.scene.scenes;
 
-import fifty.group.entity.entities.Sheep;
 import fifty.group.scene.Scene;
 import fifty.group.scene.SceneID;
 
 import java.awt.*;
 import java.util.Random;
 
-import static fifty.group.entity.entities.Sheep.*;
-
 public class MenuScene extends Scene {
-    Sheep myEntity;
 
     public MenuScene() {
         setID(SceneID.MENU);
         int randX = new Random().nextInt(640);
         int randY = new Random().nextInt(640);
-        myEntity = new Sheep(randX, randY, getEntityHandler(), Type.BLACK_GRAY);
     }
 
     @Override
@@ -26,7 +21,7 @@ public class MenuScene extends Scene {
 
     @Override
     public void draw(Graphics2D g2d) {
-        this.myEntity.draw(g2d);
+        getEntityHandler().draw(g2d);
     }
 
 }

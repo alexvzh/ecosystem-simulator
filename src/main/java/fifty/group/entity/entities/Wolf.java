@@ -1,24 +1,17 @@
 package fifty.group.entity.entities;
 
-import fifty.group.entity.EntityHandler;
-import fifty.group.entity.LiveEntity;
+import fifty.group.entity.*;
 
-import java.awt.*;
-
-public class Wolf extends LiveEntity {
+public class Wolf extends LivingEntity {
 
     public Wolf(int x, int y, EntityHandler entityHandler) {
         super(x, y, entityHandler);
-        setSpriteSheet("/Wolf.png");
+        retrieveSprites(2, 0, "/Wolf.png");
+        setSize(EntitySize.LARGE);
+        setHostility(EntityHostility.HOSTILE);
     }
 
     @Override
-    public void update() {
-        x += 1;
-    }
-
-    @Override
-    public void draw(Graphics2D g2d) {
-
+    public void updateBehaviour() {
     }
 }

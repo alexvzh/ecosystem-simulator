@@ -25,8 +25,8 @@ public class SceneManager {
 
     public void start() {
         while (running) {
-            final int TARGET_FPS = 60; // Frames per second
-            final int TARGET_UPS = 10; // Updates per second
+            final int TARGET_FPS = 120; // Frames per second
+            final int TARGET_UPS = 120; // Updates per second
             final double TIME_PER_UPDATE = 1_000_000_000.0 / TARGET_UPS; // Nanoseconds per update
             final double TIME_PER_FRAME = 1_000_000_000.0 / TARGET_FPS; // Nanoseconds per frame
 
