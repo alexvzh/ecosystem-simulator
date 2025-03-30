@@ -12,10 +12,7 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class SimulationScene extends Scene {
-
-    private volatile DataManager dataManager;
     private Random random;
-
     private String savedJson;
 
     public SimulationScene() {
@@ -24,7 +21,6 @@ public class SimulationScene extends Scene {
         this.addMouseMotionListener(new MouseListener(getEntityHandler()));
         this.random = new Random();
 
-        dataManager = new DataManager(new Terrain());
         spawnRandomEntities(random.nextInt(100));
 
         this.addKeyListener(new KeyListener() {

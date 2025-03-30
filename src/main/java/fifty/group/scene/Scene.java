@@ -1,13 +1,14 @@
 package fifty.group.scene;
 
+import fifty.group.data.*;
 import fifty.group.entity.EntityHandler;
+import fifty.group.terrain.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class Scene extends JPanel {
-
-    private final EntityHandler entityHandler;
+    protected final DataManager dataManager;
     private SceneID sceneID;
 
     protected Scene() {
@@ -18,8 +19,7 @@ public abstract class Scene extends JPanel {
         this.setFocusable(true);
         this.setLayout(null);
 
-        this.entityHandler = new EntityHandler();
-
+        this.dataManager = new DataManager(new Terrain(), new EntityHandler());
     }
 
     @Override
@@ -34,7 +34,7 @@ public abstract class Scene extends JPanel {
     protected abstract void draw(Graphics2D g2d);
 
     public EntityHandler getEntityHandler() {
-        return entityHandler;
+        return dataManager.getEntityHandler();
     }
 
     protected SceneID getID() {

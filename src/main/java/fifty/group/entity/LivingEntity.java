@@ -1,5 +1,6 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Hoverable;
 import fifty.group.entity.entities.Grass;
 
@@ -14,24 +15,40 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     private static final int SIZE = 48;
 
+    @Expose
     private EntityState state;
+
+    @Expose
     private EntityStats stats;
+
+    @Expose
     private EntitySize size;
+
+    @Expose
     private EntityHostility hostility;
+
+    @Expose
     private double velX;
+
+    @Expose
     private double velY;
 
+    @Expose
     private int tickCounter;
+
+    @Expose
     private int frameCounter;
+
+    @Expose
     private int nextChangeTime;
 
     private boolean isHovered;
 
     BufferedImage imageToDraw;
-    ArrayList<BufferedImage> images;
+    public ArrayList<BufferedImage> images;
     int offset;
 
-    private final Random random;
+    public Random random;
 
     protected Entity target;
 
@@ -51,8 +68,6 @@ public abstract class LivingEntity extends Entity implements Hoverable {
             drawHealthBar(g2d);
             drawHungerBar(g2d);
         }
-//        g2d.draw(getFOV());
-//        g2d.draw(getBoundingBox());
     }
 
     private void drawHealthBar(Graphics2D g2d) {
@@ -257,7 +272,7 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         return stats;
     }
 
-    protected void retrieveSprites(int xIndex, int yIndex, String path) {
+    public void retrieveSprites(int xIndex, int yIndex, String path) {
         int col = xIndex * 3;
         int row = yIndex * 4;
         BufferedImage spriteSheet;

@@ -1,5 +1,6 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Hoverable;
 import fifty.group.entity.entities.Grass;
 
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 
 public class EntityHandler {
 
-    private final ArrayList<Entity> entities;
+    @Expose
+    public final ArrayList<Entity> entities;
 
     public EntityHandler() {
         entities = new ArrayList<>();
@@ -64,5 +66,4 @@ public class EntityHandler {
         }
         return null;
     }
-
 }
