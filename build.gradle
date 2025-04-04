@@ -15,6 +15,8 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.13.1'
     implementation 'com.google.code.gson:gson:2.12.1'
     implementation 'org.danilopianini:gson-extras:3.1.0'
+    implementation 'com.formdev:flatlaf:3.5.4'
+
 }
 
 jar {

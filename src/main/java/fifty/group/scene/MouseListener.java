@@ -32,8 +32,9 @@ public class MouseListener implements MouseMotionListener {
         }
 
         currentEntity = entity;
+    }
 
-
-
+    public void setEntityHandler(EntityHandler entityHandler) {
+        this.entityHandler = entityHandler;
     }
 }

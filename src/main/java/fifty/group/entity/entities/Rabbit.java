@@ -13,4 +13,10 @@ public class Rabbit extends LivingEntity {
         setSize(EntitySize.SMALL);
         setHostility(EntityHostility.PASSIVE);
     }
+
+    public void init() {
+        retrieveSprites(0, 1, "/Rabbit.png");
+        setSize(EntitySize.SMALL);
+        setHostility(EntityHostility.PASSIVE);
+    }
 }

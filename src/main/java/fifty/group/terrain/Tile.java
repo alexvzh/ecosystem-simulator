@@ -48,7 +48,7 @@ public class Tile {
 
     public void growGrass() {
         if (!type.equals(TileType.GRASS)) return;
-        if (random.nextInt(3000) < 10) {
+        if (random.nextInt(9000) < 10) {
             currentGrass = new Grass(this, SceneManager.getInstance().getCurrentScene().getEntityHandler());
         }
     }

@@ -6,11 +6,12 @@ import fifty.group.entity.entities.Grass;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EntityHandler {
 
     @Expose
-    public final ArrayList<Entity> entities;
+    public final List<Entity> entities;
 
     public EntityHandler() {
         entities = new ArrayList<>();
@@ -54,6 +55,15 @@ public class EntityHandler {
             LivingEntity targetEntity = (LivingEntity) target;
             if (targetEntity.getHostility().equals(EntityHostility.HOSTILE)) continue;
             if (targetEntity.getSize() > entity.getSize()) continue;
+            if (entity.getFOV().intersects(target.getBoundingBox())) return target;
+        }
+        return null;
+    }
+
+    public Entity getVisibleGrass(LivingEntity entity) {
+        if (entity.target != null && entity.getBoundingBox().intersects(entity.target.getBoundingBox())) return entity.target;
+        for (Entity target : entities) {
+            if (!(target instanceof Grass)) continue;
             if (entity.getFOV().intersects(target.getBoundingBox())) return target;
         }
         return null;

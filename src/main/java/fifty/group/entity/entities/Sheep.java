@@ -13,4 +13,10 @@ public class Sheep extends LivingEntity
         setSize(EntitySize.MEDIUM);
         setHostility(EntityHostility.PASSIVE);
     }
+
+    public void init() {
+        retrieveSprites(2, 0, "/Sheep.png");
+        setSize(EntitySize.MEDIUM);
+        setHostility(EntityHostility.PASSIVE);
+    }
 }

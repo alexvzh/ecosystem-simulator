@@ -24,30 +24,30 @@ public class SceneManager {
     }
 
     public void start() {
-        while (running) {
-            final int TARGET_FPS = 120; // Frames per second
-            final int TARGET_UPS = 120; // Updates per second
-            final double TIME_PER_UPDATE = 1_000_000_000.0 / TARGET_UPS; // Nanoseconds per update
-            final double TIME_PER_FRAME = 1_000_000_000.0 / TARGET_FPS; // Nanoseconds per frame
+        final int TARGET_FPS = 120; // Frames per second
+        final int TARGET_UPS = 120; // Updates per second
+        final double TIME_PER_UPDATE = 1_000_000_000.0 / TARGET_UPS; // Nanoseconds per update
+        final double TIME_PER_FRAME = 1_000_000_000.0 / TARGET_FPS; // Nanoseconds per frame
 
-            long lastUpdateTime = System.nanoTime();
-            long lastRenderTime = System.nanoTime();
+        long lastUpdateTime = System.nanoTime();
+        long lastRenderTime = System.nanoTime();
 
-            double delta = 0;
-            int frames = 0;
-            int updates = 0;
+        double delta = 0;
+        int frames = 0;
+        int updates = 0;
 
-            long fpsTimer = System.currentTimeMillis();
+        long fpsTimer = System.currentTimeMillis();
 
-            while (running) {
-                long currentTime = System.nanoTime();
-                delta += (currentTime - lastUpdateTime) / TIME_PER_UPDATE;
-                lastUpdateTime = currentTime;
+        while (true) {
+            long currentTime = System.nanoTime();
+            delta += (currentTime - lastUpdateTime) / TIME_PER_UPDATE;
+            lastUpdateTime = currentTime;
 
-                while (delta >= 1) {
+            if (running) {
+                if (delta >= 1) {
                     currentScene.update();
                     updates++;
-                    delta--;
+                    delta = 0;
                 }
 
                 if (currentTime - lastRenderTime >= TIME_PER_FRAME) {
@@ -55,20 +55,20 @@ public class SceneManager {
                     frames++;
                     lastRenderTime = currentTime;
                 }
+            }
 
-                if (System.currentTimeMillis() - fpsTimer >= 1000) {
-                    System.out.println("FPS: " + frames + " | UPS: " + updates);
-                    fpsTimer += 1000;
-                    frames = 0;
-                    updates = 0;
-                }
+            if (System.currentTimeMillis() - fpsTimer >= 1000) {
+                System.out.println("FPS: " + frames + " | UPS: " + updates);
+                fpsTimer += 1000;
+                frames = 0;
+                updates = 0;
+            }
 
-                // Save CPU...
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            // Save CPU...
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -103,6 +103,14 @@ public class SceneManager {
 
     public void initialize(JFrame window) {
         this.window = window;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     public static SceneManager getInstance() {

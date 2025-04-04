@@ -15,40 +15,25 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     private static final int SIZE = 48;
 
-    @Expose
-    private EntityState state;
+    @Expose private double velX;
+    @Expose private double velY;
 
-    @Expose
-    private EntityStats stats;
+    @Expose private EntitySize size;
+    @Expose private EntityState state;
+    @Expose private EntityStats stats;
+    @Expose private EntityHostility hostility;
 
-    @Expose
-    private EntitySize size;
-
-    @Expose
-    private EntityHostility hostility;
-
-    @Expose
-    private double velX;
-
-    @Expose
-    private double velY;
-
-    @Expose
-    private int tickCounter;
-
-    @Expose
-    private int frameCounter;
-
-    @Expose
-    private int nextChangeTime;
+    @Expose private int tickCounter;
+    @Expose private int frameCounter;
+    @Expose private int nextChangeTime;
 
     private boolean isHovered;
 
-    BufferedImage imageToDraw;
-    public ArrayList<BufferedImage> images;
-    int offset;
+    private int offset;
+    private BufferedImage imageToDraw;
+    private ArrayList<BufferedImage> images;
 
-    public Random random;
+    private Random random;
 
     protected Entity target;
 
@@ -59,7 +44,7 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         this.tickCounter = 0;
         this.frameCounter = 0;
         this.images = new ArrayList<>();
-        this.stats = new EntityStats(this, 100, 100, 4, 5);
+        this.stats = new EntityStats(this, 100, 200, 4, 5);
     }
 
     public void draw(Graphics2D g2d) {
@@ -120,35 +105,50 @@ public abstract class LivingEntity extends Entity implements Hoverable {
     }
 
     private void updateGenericBehaviour() {
+        if (stats.getHunger() > stats.getMaxHunger()/4*3) return;
+        Entity targetEntity = hostility.equals(EntityHostility.HOSTILE) ? entityHandler.getVisiblePray(this) : entityHandler.getVisibleGrass(this);
+
+        if (targetEntity == null) {
+            state = EntityState.SEARCHING;
+            stats.setSpeed(stats.getMaxSpeed() / 2);
+            this.target = null;
+        } else {
+            state = EntityState.MOVING;
+            stats.setSpeed(stats.getMaxSpeed());
+            this.target = targetEntity;
+        }
+
+        if (target == null) return;
+
         if (hostility.equals(EntityHostility.HOSTILE)) {
-            updateHostileBehaviour();
-            if (target != null)
                 damagePray();
         } else if (hostility.equals(EntityHostility.PASSIVE)) {
-            updatePassiveBehaviour();
-            if (target != null)
                 eatGrass();
         }
     }
 
     private void damagePray() {
-        if (tickCounter % 100 != 0) return;
+        if (tickCounter % 10 != 0) return;
         if (this.getBoundingBox().intersects(target.getBoundingBox())) {
             ((LivingEntity)target).getStats().damage(this.getStats().getDamage());
             if (((LivingEntity)target).getStats().getHealth() < 0) {
-                this.getStats().applyEatBonus();
-                entityHandler.removeEntity(target);
-                target = null;
-                state = EntityState.SEARCHING;
+                consumeEntity();
             }
         }
     }
 
     private void eatGrass() {
         if (this.getBoundingBox().intersects(target.getBoundingBox())) {
-            this.getStats().applyEatBonus();
-            entityHandler.removeEntity(target);
+            consumeEntity();
         }
+    }
+
+    private void consumeEntity() {
+        this.getStats().applyEatBonus();
+        entityHandler.removeEntity(target);
+        target = null;
+        state = EntityState.SEARCHING;
+        stats.setSpeed(stats.getMaxSpeed()/2);
     }
 
     private void updateHostileBehaviour() {
@@ -169,6 +169,7 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         if (targetEntity == null) {
             state = EntityState.SEARCHING;
             stats.setSpeed(stats.getMaxSpeed() / 2);
+            this.target = null;
         } else if (targetEntity instanceof Grass){
             state = EntityState.MOVING;
             stats.setSpeed(stats.getMaxSpeed());
@@ -299,5 +300,13 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     protected void setStats(EntityStats stats) {
         this.stats = stats;
+    }
+
+    public void setImages(ArrayList<BufferedImage> images) {
+        this.images = images;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
     }
 }

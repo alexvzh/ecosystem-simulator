@@ -14,4 +14,9 @@ public class Fox extends LivingEntity {
         setHostility(EntityHostility.HOSTILE);
     }
 
+    public void init() {
+        retrieveSprites(0, 0, "/Fox.png");
+        setSize(EntitySize.SMALL);
+        setHostility(EntityHostility.HOSTILE);
+    }
 }

@@ -20,7 +20,7 @@ public class SpriteLoader {
 
     public SpriteLoader() {
         try {
-            TILE_MAP = ImageIO.read(Objects.requireNonNull(SimulationScene.class.getResourceAsStream("/TilemapDemo.png")));
+            TILE_MAP = ImageIO.read(Objects.requireNonNull(SimulationScene.class.getResourceAsStream("/TilemapDemoRecolored.png")));
         } catch (IOException e) {throw new RuntimeException(e);}
 
         initSpriteMap();

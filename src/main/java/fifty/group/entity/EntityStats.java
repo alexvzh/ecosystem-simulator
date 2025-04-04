@@ -33,7 +33,7 @@ public class EntityStats {
         this.maxHealth = maxHealth;
         this.hunger = maxHunger;
         this.maxHunger = maxHunger;
-        this.speed = maxSpeed;
+        this.speed = maxSpeed/2;
         this.maxSpeed = maxSpeed;
         this.damage = damage;
     }

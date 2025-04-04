@@ -12,7 +12,7 @@ public class Raccoon extends LivingEntity {
         retrieveSprites(1, 0, "/Raccoon.png");
         setHostility(EntityHostility.NEUTRAL);
         setSize(EntitySize.SMALL);
-        setStats(new EntityStats(this, 1000, 1000, 20, 20));
+        setStats(new EntityStats(this, 1000, 1000, 10, 20));
     }
 
 
@@ -23,5 +23,12 @@ public class Raccoon extends LivingEntity {
         if (tile != null) {
             tile.growGrass();
         }
+    }
+
+    public void init() {
+        retrieveSprites(1, 0, "/Raccoon.png");
+        setHostility(EntityHostility.NEUTRAL);
+        setSize(EntitySize.SMALL);
+        setStats(new EntityStats(this, 1000, 1000, 20, 20));
     }
 }

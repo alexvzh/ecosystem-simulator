@@ -10,9 +10,14 @@ public class Terrain {
 
     @Expose
     private final ArrayList<Tile> tileList;
+    private final MapGenerator mapGenerator;
+
+    private final Random random;
 
     public Terrain() {
         this.tileList = new ArrayList<>();
+        this.random = new Random();
+        this.mapGenerator = new MapGenerator(random.nextLong());
         initTiles();
     }
 
@@ -24,7 +29,8 @@ public class Terrain {
     }
 
     private void initTiles() {
-        int[][] integerList = generateRandomMap(45, 26);
+        //int[][] integerList = generateRandomMap(45, 26);
+        int[][] integerList = mapGenerator.generateRandomMap(45, 26, 0.2, 0);
 
         int x = 0;
         int y = 0;
@@ -43,7 +49,6 @@ public class Terrain {
 
     public int[][] generateRandomMap(int width, int height) {
         int[][] map = new int[height][width];
-        Random random = new Random();
 
         int probability = 30 + random.nextInt(41);
 
