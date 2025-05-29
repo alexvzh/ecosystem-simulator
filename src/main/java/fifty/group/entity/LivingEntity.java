@@ -1,5 +1,6 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.Expose;
 import fifty.group.entity.behaviour.Hoverable;
 import fifty.group.entity.entities.Grass;
 
@@ -14,15 +15,31 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     private static final int SIZE = 48;
 
+    @Expose
     private EntityState state;
+
+    @Expose
     private EntityStats stats;
+
+    @Expose
     private EntitySize size;
+
+    @Expose
     private EntityHostility hostility;
+
+    @Expose
     private double velX;
+
+    @Expose
     private double velY;
 
+    @Expose
     private int tickCounter;
+
+    @Expose
     private int frameCounter;
+
+    @Expose
     private int nextChangeTime;
 
     private boolean isHovered;
@@ -119,8 +136,8 @@ public abstract class LivingEntity extends Entity implements Hoverable {
     private void damagePray() {
         if (tickCounter % 100 != 0) return;
         if (this.getBoundingBox().intersects(target.getBoundingBox())) {
-            ((LivingEntity)target).getStats().damage(this.getStats().getDamage());
-            if (((LivingEntity)target).getStats().getHealth() < 0) {
+            ((LivingEntity) target).getStats().damage(this.getStats().getDamage());
+            if (((LivingEntity) target).getStats().getHealth() < 0) {
                 this.getStats().applyEatBonus();
                 entityHandler.removeEntity(target);
                 target = null;
@@ -147,14 +164,14 @@ public abstract class LivingEntity extends Entity implements Hoverable {
             stats.setSpeed(stats.getMaxSpeed());
             this.target = targetEntity;
         }
-}
+    }
 
     private void updatePassiveBehaviour() {
         Entity targetEntity = entityHandler.getVisibleEntity(this);
         if (targetEntity == null) {
             state = EntityState.SEARCHING;
             stats.setSpeed(stats.getMaxSpeed() / 2);
-        } else if (targetEntity instanceof Grass){
+        } else if (targetEntity instanceof Grass) {
             state = EntityState.MOVING;
             stats.setSpeed(stats.getMaxSpeed());
             this.target = targetEntity;
@@ -170,11 +187,11 @@ public abstract class LivingEntity extends Entity implements Hoverable {
     }
 
     private void restrictPosition() {
-        if (x <= 0 || x  + SIZE >= 1400) {
+        if (x <= 0 || x + SIZE >= 1400) {
             velX = -velX;
         }
 
-        if (y <= 0 || y  + SIZE >= 800) {
+        if (y <= 0 || y + SIZE >= 800) {
             velY = -velY;
         }
 

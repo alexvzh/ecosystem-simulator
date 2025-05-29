@@ -1,5 +1,6 @@
 package fifty.group.entity.entities;
 
+import com.google.gson.annotations.Expose;
 import fifty.group.entity.Entity;
 import fifty.group.entity.EntityHandler;
 import fifty.group.terrain.Tile;
@@ -20,7 +21,8 @@ public class Grass extends Entity {
 //        } catch (IOException e) {throw new RuntimeException(e);}
 //    }
 
-    Tile tile;
+    @Expose
+    private Tile tile;
 
     public Grass(Tile tile, EntityHandler entityHandler) {
         super(tile.getBounds().getX() - 16, tile.getBounds().getY() - 16, entityHandler);

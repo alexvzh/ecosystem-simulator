@@ -1,5 +1,6 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.Expose;
 import fifty.group.entity.behaviour.Hoverable;
 import fifty.group.entity.entities.Grass;
 
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 
 public class EntityHandler {
 
-    private final ArrayList<Entity> entities;
+    @Expose
+    public ArrayList<Entity> entities; // todo:
 
     public EntityHandler() {
         entities = new ArrayList<>();
@@ -32,7 +34,7 @@ public class EntityHandler {
         for (Entity entity : entities) {
             if (!(entity instanceof Hoverable)) continue;
             if (entity.getBoundingBox().contains(p))
-                return (Hoverable)entity;
+                return (Hoverable) entity;
         }
         return null;
     }
@@ -46,7 +48,8 @@ public class EntityHandler {
     }
 
     public Entity getVisiblePray(LivingEntity entity) {
-        if (entity.target != null && entity.getBoundingBox().intersects(entity.target.getBoundingBox())) return entity.target;
+        if (entity.target != null && entity.getBoundingBox().intersects(entity.target.getBoundingBox()))
+            return entity.target;
         for (Entity target : entities) {
             if (!(target instanceof LivingEntity)) continue;
             LivingEntity targetEntity = (LivingEntity) target;

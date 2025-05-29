@@ -1,16 +1,31 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.Expose;
 import fifty.group.scene.SceneManager;
 
 public class EntityStats {
 
     private final LivingEntity entity;
+
+    @Expose
     private int health;
+
+    @Expose
     private int maxHealth;
+
+    @Expose
     private int hunger;
+
+    @Expose
     private int maxHunger;
+
+    @Expose
     private int speed;
+
+    @Expose
     private int maxSpeed;
+
+    @Expose
     private int damage;
 
     public EntityStats(LivingEntity entity, int maxHealth, int maxHunger, int maxSpeed, int damage) {

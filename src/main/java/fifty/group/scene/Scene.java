@@ -1,5 +1,6 @@
 package fifty.group.scene;
 
+import com.google.gson.annotations.Expose;
 import fifty.group.entity.EntityHandler;
 
 import javax.swing.*;
@@ -7,7 +8,8 @@ import java.awt.*;
 
 public abstract class Scene extends JPanel {
 
-    private final EntityHandler entityHandler;
+    @Expose
+    public EntityHandler entityHandler; //todo change
     private SceneID sceneID;
 
     protected Scene() {

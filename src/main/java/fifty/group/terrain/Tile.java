@@ -1,14 +1,12 @@
 package fifty.group.terrain;
 
-import com.google.gson.annotations.*;
+import com.google.gson.annotations.Expose;
 import fifty.group.entity.entities.Grass;
 import fifty.group.scene.SceneManager;
-import fifty.group.sprite.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
-import java.util.List;
+import java.util.Random;
 
 public class Tile {
 
@@ -18,23 +16,18 @@ public class Tile {
     @Expose
     private final int y;
 
+    private final BufferedImage image;
+    private final Random random;
+    private Grass currentGrass;
+
     @Expose
     private TileType type;
 
-    @Expose
-    private List<TileType> neighbors;
-
-    private Grass currentGrass;
-    private final BufferedImage image;
-    private final Random random;
-
-    public Tile(int x, int y, TileType type, List<TileType> neighbors) {
+    public Tile(int x, int y, TileType type, BufferedImage image) {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.neighbors = neighbors;
-
-        this.image = SpriteLoader.getInstance().getSpriteMap().get(this.neighbors);
+        this.image = image;
         this.random = new Random();
     }
 
