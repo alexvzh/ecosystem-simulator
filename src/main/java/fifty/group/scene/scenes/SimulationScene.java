@@ -1,57 +1,58 @@
 package fifty.group.scene.scenes;
 
 import fifty.group.data.DataManager;
+import fifty.group.data.SimulationState;
 import fifty.group.entity.entities.*;
 import fifty.group.scene.MouseListener;
+import fifty.group.scene.SceneManager;
 import fifty.group.terrain.Terrain;
 import fifty.group.scene.Scene;
 import fifty.group.scene.SceneID;
 import fifty.group.time.TimeManager;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
 public class SimulationScene extends Scene {
 
     private final Random random;
+    private final Terrain terrain;
     private final DataManager dataManager;
     private final TimeManager timeManager;
-    private final MouseListener mouseListener;
 
-    public SimulationScene(DataManager dataManager, TimeManager timeManager) {
+    public SimulationScene(Terrain terrain, DataManager dataManager, TimeManager timeManager) {
         setID(SceneID.SIMULATION);
         this.random = new Random();
+        this.terrain = terrain;
         this.dataManager = dataManager;
         this.timeManager = timeManager;
-        this.mouseListener = new MouseListener(entityHandler);
+        MouseListener mouseListener = new MouseListener(entityHandler);
         this.addMouseMotionListener(mouseListener);
         this.dataManager.setEntityHandler(this.entityHandler);
 
         initRandomSimulation();
+        addButtons();
 
     }
 
     @Override
     public void update() {
-        getEntityHandler().update();
+        entityHandler.update();
         timeManager.update();
     }
 
     @Override
     public void draw(Graphics2D g2d) {
-        dataManager.getTerrain().drawTileLayer(g2d);
-        getEntityHandler().draw(g2d);
+        terrain.drawTileLayer(g2d);
+        entityHandler.draw(g2d);
         timeManager.draw(g2d);
     }
 
-    public Terrain getTerrain() {
-        return dataManager.getTerrain();
-    }
-
     public void initRandomSimulation() {
+        entityHandler.getEntityList().clear();
         spawnRandomEntities(random.nextInt(100));
     }
-
 
     public void spawnRandomEntities(int maxEntities) {
         int numEntities = random.nextInt(maxEntities) + 1;
@@ -80,7 +81,33 @@ public class SimulationScene extends Scene {
         }
     }
 
-    public MouseListener getMouseListener() {
-        return mouseListener;
+
+    private void addButtons() {
+
+        int windowHeight = 800;
+
+        int buttonWidth = 100;
+        int buttonHeight = 50;
+
+        addButton(15, (int) (windowHeight - buttonHeight * 1.5), buttonWidth, buttonHeight, "Pause", e-> {
+            if (SceneManager.getInstance().isRunning()) {
+                ((JButton)e.getSource()).setText("Resume");
+                SceneManager.getInstance().setRunning(false);
+            } else {
+                ((JButton)e.getSource()).setText("Pause");
+                SceneManager.getInstance().setRunning(true);
+            }
+        });
+
+
+        addButton(15 + buttonWidth + 15, (int) (windowHeight - buttonHeight * 1.5), buttonWidth, buttonHeight, "Save", e-> {
+            this.dataManager.serialize(new SimulationState(terrain.getTileList(), entityHandler.getEntityList(), timeManager.getTime(), timeManager.getDay()));
+        });
+
+        addButton(15 + (buttonWidth + 15) * 2, (int) (windowHeight - buttonHeight * 1.5), buttonWidth, buttonHeight, "Exit", e-> {
+            SceneManager.getInstance().setScene(SceneID.MENU);
+        });
+
     }
+
 }
