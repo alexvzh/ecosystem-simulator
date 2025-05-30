@@ -1,12 +1,10 @@
 package fifty.group.time;
 
-import com.google.gson.annotations.Expose;
-
 import java.awt.*;
 
 public class TimeManager {
 
-    @Expose private int time;
+    private int time;
     private int tickCounter;
     private String clockString;
     private final Font font;
@@ -17,6 +15,7 @@ public class TimeManager {
         this.time = 900;
         this.tickCounter = 0;
         this.font = new Font("Monospaced", Font.PLAIN, 30);
+        this.clockString = "";
     }
 
     public void update() {
@@ -84,4 +83,11 @@ public class TimeManager {
             startDay();
     }
 
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 }

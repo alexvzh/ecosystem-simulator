@@ -8,8 +8,7 @@ import java.util.Random;
 
 public class Terrain {
 
-    @Expose
-    private final ArrayList<Tile> tileList;
+    @Expose private ArrayList<Tile> tileList;
     private final MapGenerator mapGenerator;
 
     private final Random random;
@@ -29,8 +28,7 @@ public class Terrain {
     }
 
     private void initTiles() {
-        //int[][] integerList = generateRandomMap(45, 26);
-        int[][] integerList = mapGenerator.generateRandomMap(45, 26, 0.2, 0);
+        int[][] integerList = mapGenerator.generateMap(45, 26, 0.2, 0);
 
         int x = 0;
         int y = 0;
@@ -76,5 +74,13 @@ public class Terrain {
             if (tile.getBounds().contains(x, y)) return tile;
         }
         return null;
+    }
+
+    public ArrayList<Tile> getTileList() {
+        return tileList;
+    }
+
+    public void setTileList(ArrayList<Tile> tileList) {
+        this.tileList = tileList;
     }
 }

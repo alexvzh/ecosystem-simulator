@@ -4,26 +4,13 @@ import com.google.gson.annotations.*;
 import fifty.group.scene.SceneManager;
 
 public class EntityStats {
-    @Expose
-    private int health;
-
-    @Expose
-    private int maxHealth;
-
-    @Expose
-    private int hunger;
-
-    @Expose
-    private int maxHunger;
-
-    @Expose
-    private int speed;
-
-    @Expose
-    private int maxSpeed;
-
-    @Expose
-    private int damage;
+    @Expose private int health;
+    @Expose private int maxHealth;
+    @Expose private int hunger;
+    @Expose private int maxHunger;
+    @Expose private int speed;
+    @Expose private int maxSpeed;
+    @Expose private int damage;
 
     private final LivingEntity entity;
 

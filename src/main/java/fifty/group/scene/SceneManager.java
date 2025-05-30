@@ -1,7 +1,11 @@
 package fifty.group.scene;
 
+import fifty.group.data.DataManager;
 import fifty.group.scene.scenes.MenuScene;
 import fifty.group.scene.scenes.SimulationScene;
+import fifty.group.scene.scenes.SimulationSelectScene;
+import fifty.group.terrain.Terrain;
+import fifty.group.time.TimeManager;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,9 +18,17 @@ public class SceneManager {
     private JFrame window;
     private Scene currentScene;
     private boolean running = true;
+    private final DataManager dataManager;
+    private final TimeManager timeManager;
+    private final Terrain terrain;
 
     private SceneManager() {
         this.scenes = new ArrayList<>();
+
+
+        this.terrain = new Terrain();
+        this.timeManager = new TimeManager();
+        this.dataManager = new DataManager(terrain, timeManager);
 
         initScenes();
 
@@ -98,7 +110,8 @@ public class SceneManager {
 
     private void initScenes() {
         scenes.add(new MenuScene());
-        scenes.add(new SimulationScene());
+        scenes.add(new SimulationScene(this.dataManager, this.timeManager));
+        scenes.add(new SimulationSelectScene(this.terrain, this.dataManager, this.timeManager));
     }
 
     public void initialize(JFrame window) {

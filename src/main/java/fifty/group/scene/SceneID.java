@@ -2,5 +2,6 @@ package fifty.group.scene;
 
 public enum SceneID {
     MENU,
-    SIMULATION
+    SIMULATION,
+    SIMULATION_SELECT
 }

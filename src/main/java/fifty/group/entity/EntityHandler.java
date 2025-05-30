@@ -10,8 +10,7 @@ import java.util.List;
 
 public class EntityHandler {
 
-    @Expose
-    public final List<Entity> entities;
+    private final List<Entity> entities;
 
     public EntityHandler() {
         entities = new ArrayList<>();
@@ -75,5 +74,9 @@ public class EntityHandler {
             if (entity.getFOV().intersects(target.getBoundingBox())) return target;
         }
         return null;
+    }
+
+    public List<Entity> getEntityList() {
+        return entities;
     }
 }

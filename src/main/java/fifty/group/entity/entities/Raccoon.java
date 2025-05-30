@@ -25,10 +25,4 @@ public class Raccoon extends LivingEntity {
         }
     }
 
-    public void init() {
-        retrieveSprites(1, 0, "/Raccoon.png");
-        setHostility(EntityHostility.NEUTRAL);
-        setSize(EntitySize.SMALL);
-        setStats(new EntityStats(this, 1000, 1000, 20, 20));
-    }
 }

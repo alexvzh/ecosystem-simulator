@@ -1,17 +1,13 @@
 package fifty.group.terrain;
 
-import java.util.Random;
-
 public class MapGenerator {
     private final OpenSimplexNoise noise;
-    private final Random random;
 
     public MapGenerator(long seed) {
-        this.noise = new OpenSimplexNoise(seed);
-        this.random = new Random(seed);
+        this.noise = new OpenSimplexNoise(10);
     }
 
-    public int[][] generateRandomMap(int width, int height, double scale, double threshold) {
+    public int[][] generateMap(int width, int height, double scale, double threshold) {
         int[][] map = new int[height][width];
 
         for (int y = 0; y < height; y++) {

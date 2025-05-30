@@ -35,7 +35,7 @@ public class MenuScene extends Scene {
         int y = windowHeight/2 - buttonHeight/2;
 
         addButton(x, (int) (y - buttonHeight * 1.25), buttonWidth, buttonHeight, "New Random Simulation", e -> SceneManager.getInstance().setScene(SceneID.SIMULATION));
-        addButton(x, y, buttonWidth, buttonHeight, "Load Simulation", e -> SceneManager.getInstance().setScene(SceneID.SIMULATION));
+        addButton(x, y, buttonWidth, buttonHeight, "Load Simulation", e -> SceneManager.getInstance().setScene(SceneID.SIMULATION_SELECT));
         addButton(x, (int) (y + buttonHeight * 1.25), buttonWidth, buttonHeight, "Exit", e -> System.exit(0));
 
     }

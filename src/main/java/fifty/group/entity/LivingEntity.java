@@ -2,7 +2,6 @@ package fifty.group.entity;
 
 import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Hoverable;
-import fifty.group.entity.entities.Grass;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -59,14 +58,14 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         g2d.setColor(Color.RED);
         g2d.fillRect((int) x, (int) y - 12, 50, 5);
         g2d.setColor(Color.GREEN);
-        g2d.fillRect((int) x, (int) y - 12, stats.getHealth() / 2, 5);
+        g2d.fillRect((int) x, (int) y - 12, stats.getHealth() / (stats.getMaxHealth() / 50), 5);
     }
 
     private void drawHungerBar(Graphics2D g2d) {
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.BLACK);
         g2d.fillRect((int) x, (int) y - 5, 50, 5);
         g2d.setColor(Color.YELLOW);
-        g2d.fillRect((int) x, (int) y - 5, stats.getHunger() / 2, 5);
+        g2d.fillRect((int) x, (int) y - 5, stats.getHunger() / (stats.getMaxHunger() / 50), 5);
     }
 
     public void onHover() {
@@ -150,33 +149,6 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         state = EntityState.SEARCHING;
         stats.setSpeed(stats.getMaxSpeed()/2);
     }
-
-    private void updateHostileBehaviour() {
-        Entity targetEntity = entityHandler.getVisiblePray(this);
-        if (targetEntity == null) {
-            state = EntityState.SEARCHING;
-            stats.setSpeed(stats.getMaxSpeed() / 2);
-            this.target = null;
-        } else {
-            state = EntityState.MOVING;
-            stats.setSpeed(stats.getMaxSpeed());
-            this.target = targetEntity;
-        }
-}
-
-    private void updatePassiveBehaviour() {
-        Entity targetEntity = entityHandler.getVisibleEntity(this);
-        if (targetEntity == null) {
-            state = EntityState.SEARCHING;
-            stats.setSpeed(stats.getMaxSpeed() / 2);
-            this.target = null;
-        } else if (targetEntity instanceof Grass){
-            state = EntityState.MOVING;
-            stats.setSpeed(stats.getMaxSpeed());
-            this.target = targetEntity;
-        }
-    }
-
 
     private void updateFrameCounter() {
         if (tickCounter % (40 / stats.getSpeed()) == 0) {

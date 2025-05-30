@@ -15,9 +15,4 @@ public class Wolf extends LivingEntity {
     public void updateBehaviour() {
     }
 
-    public void init() {
-        retrieveSprites(2, 0, "/Wolf.png");
-        setSize(EntitySize.LARGE);
-        setHostility(EntityHostility.HOSTILE);
-    }
 }
