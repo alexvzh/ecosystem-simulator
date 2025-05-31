@@ -11,8 +11,4 @@ public class Wolf extends LivingEntity {
         setHostility(EntityHostility.HOSTILE);
     }
 
-    @Override
-    public void updateBehaviour() {
-    }
-
 }

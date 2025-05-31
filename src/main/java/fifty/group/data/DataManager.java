@@ -4,7 +4,6 @@ import com.google.gson.*;
 import com.google.gson.typeadapters.*;
 import fifty.group.entity.*;
 import fifty.group.entity.entities.*;
-import fifty.group.scene.SceneManager;
 import fifty.group.terrain.*;
 import fifty.group.time.TimeManager;
 
@@ -19,9 +18,9 @@ import java.util.*;
 
 public class DataManager {
 
-    private Terrain terrain;
+    private final Terrain terrain;
+    private final TimeManager timeManager;
     private EntityHandler entityHandler;
-    private TimeManager timeManager;
 
     public DataManager(Terrain terrain, TimeManager timeManager) {
         this.terrain = terrain;
@@ -43,8 +42,6 @@ public class DataManager {
                 .registerTypeAdapterFactory(runtimeTypeAdapterFactory)
                 .setPrettyPrinting()
                 .create();
-
-        SceneManager.getInstance().setRunning(!SceneManager.getInstance().isRunning());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
         String timestamp = LocalDateTime.now().format(formatter);
@@ -77,6 +74,7 @@ public class DataManager {
         entityHandler.getEntityList().clear();
         terrain.setTileList(state.getTileList());
         timeManager.setTime(state.getTime());
+        timeManager.setDay(state.getDay());
 
         for (Entity entity : state.getEntityList()) {
             entity.setEntityHandler(entityHandler);

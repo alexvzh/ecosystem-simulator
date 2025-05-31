@@ -14,16 +14,17 @@ public class SceneManager {
 
     private static SceneManager instance;
 
-    private final ArrayList<Scene> scenes;
     private JFrame window;
+    private boolean running;
     private Scene currentScene;
-    private boolean running = true;
+    private final Terrain terrain;
     private final DataManager dataManager;
     private final TimeManager timeManager;
-    private final Terrain terrain;
+    private final ArrayList<Scene> scenes;
 
     private SceneManager() {
         this.scenes = new ArrayList<>();
+        this.running = true;
 
 
         this.terrain = new Terrain();
@@ -85,8 +86,10 @@ public class SceneManager {
         }
     }
 
-    public void setScene(SceneID sceneID) {
+    public void setScene(SceneID sceneID, boolean init) {
         Scene scene = this.getSceneByID(sceneID);
+        if (sceneID.equals(SceneID.SIMULATION) && init) ((SimulationScene) scene).initRandomSimulation();
+        if (sceneID.equals(SceneID.SIMULATION_SELECT) && init) ((SimulationSelectScene) scene).addButtons();
         window.remove(currentScene);
         window.add(scene);
         window.pack();
@@ -110,8 +113,8 @@ public class SceneManager {
 
     private void initScenes() {
         scenes.add(new MenuScene());
-        scenes.add(new SimulationScene(this.dataManager, this.timeManager));
-        scenes.add(new SimulationSelectScene(this.terrain, this.dataManager, this.timeManager));
+        scenes.add(new SimulationScene(this.terrain, this.dataManager, this.timeManager));
+        scenes.add(new SimulationSelectScene(this.dataManager));
     }
 
     public void initialize(JFrame window) {
@@ -124,6 +127,10 @@ public class SceneManager {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public Terrain getTerrain() {
+        return terrain;
     }
 
     public static SceneManager getInstance() {

@@ -30,10 +30,7 @@ public class SimulationScene extends Scene {
         MouseListener mouseListener = new MouseListener(entityHandler);
         this.addMouseMotionListener(mouseListener);
         this.dataManager.setEntityHandler(this.entityHandler);
-
-        initRandomSimulation();
         addButtons();
-
     }
 
     @Override
@@ -51,6 +48,8 @@ public class SimulationScene extends Scene {
 
     public void initRandomSimulation() {
         entityHandler.getEntityList().clear();
+        timeManager.init();
+        terrain.init();
         spawnRandomEntities(random.nextInt(100));
     }
 
@@ -105,7 +104,7 @@ public class SimulationScene extends Scene {
         });
 
         addButton(15 + (buttonWidth + 15) * 2, (int) (windowHeight - buttonHeight * 1.5), buttonWidth, buttonHeight, "Exit", e-> {
-            SceneManager.getInstance().setScene(SceneID.MENU);
+            SceneManager.getInstance().setScene(SceneID.MENU, false);
         });
 
     }

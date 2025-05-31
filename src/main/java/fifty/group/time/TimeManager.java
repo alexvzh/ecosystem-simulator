@@ -5,6 +5,7 @@ import java.awt.*;
 public class TimeManager {
 
     private int time;
+    private int day;
     private int tickCounter;
     private String clockString;
     private final Font font;
@@ -12,10 +13,7 @@ public class TimeManager {
     private int transitionShadeValue;
 
     public TimeManager() {
-        this.time = 900;
-        this.tickCounter = 0;
         this.font = new Font("Monospaced", Font.PLAIN, 30);
-        this.clockString = "";
     }
 
     public void update() {
@@ -27,6 +25,7 @@ public class TimeManager {
     public void draw(Graphics2D g2d) {
         drawShade(g2d);
         drawClock(g2d);
+        drawDay(g2d);
     }
 
     private void updateTime() {
@@ -59,7 +58,13 @@ public class TimeManager {
     public void drawClock(Graphics2D g2d) {
         g2d.setFont(font);
         g2d.setColor(Color.WHITE);
-        g2d.drawString(clockString, 20, 30);
+        g2d.drawString(clockString, 130, 30);
+    }
+
+    public void drawDay(Graphics2D g2d) {
+        g2d.setFont(font);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Day " + day, 20, 30);
     }
 
     public void drawShade(Graphics2D g2d) {
@@ -74,6 +79,7 @@ public class TimeManager {
         tickCounter = 0;
         shadeValue = 0;
         transitionShadeValue = 0;
+        day++;
     }
 
     private void endDay() {
@@ -83,11 +89,26 @@ public class TimeManager {
             startDay();
     }
 
+    public void init() {
+        this.time = 0;
+        this.day = 1;
+        this.tickCounter = 0;
+        this.clockString = "";
+    }
+
     public int getTime() {
         return time;
     }
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 }

@@ -18,7 +18,7 @@ public class SpriteLoader {
     private HashMap<List<TileType>, BufferedImage> spriteMap;
     private static SpriteLoader instance;
 
-    public SpriteLoader() {
+    private SpriteLoader() {
         try {
             TILE_MAP = ImageIO.read(Objects.requireNonNull(SimulationScene.class.getResourceAsStream("/TilemapDemoRecolored.png")));
         } catch (IOException e) {throw new RuntimeException(e);}

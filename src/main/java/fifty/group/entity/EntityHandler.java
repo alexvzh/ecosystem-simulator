@@ -1,6 +1,5 @@
 package fifty.group.entity;
 
-import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Hoverable;
 import fifty.group.entity.entities.Grass;
 
@@ -40,6 +39,10 @@ public class EntityHandler {
     }
 
     public void addEntity(Entity entity) {
+        if (entity instanceof Grass) {
+            entities.add(0, entity);
+            return;
+        }
         this.entities.add(entity);
     }
 
@@ -61,14 +64,6 @@ public class EntityHandler {
 
     public Entity getVisibleGrass(LivingEntity entity) {
         if (entity.target != null && entity.getBoundingBox().intersects(entity.target.getBoundingBox())) return entity.target;
-        for (Entity target : entities) {
-            if (!(target instanceof Grass)) continue;
-            if (entity.getFOV().intersects(target.getBoundingBox())) return target;
-        }
-        return null;
-    }
-
-    public Entity getVisibleEntity(LivingEntity entity) {
         for (Entity target : entities) {
             if (!(target instanceof Grass)) continue;
             if (entity.getFOV().intersects(target.getBoundingBox())) return target;

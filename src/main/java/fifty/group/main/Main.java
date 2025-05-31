@@ -19,7 +19,7 @@ public class Main {
 
         SceneManager.getInstance().initialize(window);
 
-        SceneManager.getInstance().setScene(SceneID.MENU);
+        SceneManager.getInstance().setScene(SceneID.MENU, false);
         SceneManager.getInstance().start();
 
     }

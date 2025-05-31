@@ -4,8 +4,6 @@ import fifty.group.data.DataManager;
 import fifty.group.scene.Scene;
 import fifty.group.scene.SceneID;
 import fifty.group.scene.SceneManager;
-import fifty.group.terrain.Terrain;
-import fifty.group.time.TimeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,35 +12,27 @@ import java.io.File;
 public class SimulationSelectScene extends Scene {
 
     private final DataManager dataManager;
-    private final TimeManager timeManager;
-    private final Terrain terrain;
-    private final File[] saves;
 
-    public SimulationSelectScene(Terrain terrain, DataManager dataManager, TimeManager timeManager) {
+    public SimulationSelectScene(DataManager dataManager) {
         setID(SceneID.SIMULATION_SELECT);
-
-        this.dataManager = dataManager;
-        this.timeManager = timeManager;
-        this.terrain = terrain;
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.saves = fetchSaves();
-
         addButtons();
 
-//        JScrollPane scrollPane = new JScrollPane(this);
-//        frame.getContentPane().add(scrollPane);
+        this.dataManager = dataManager;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
     }
 
     private File[] fetchSaves() {
-        File folder = new File("output");
+        File folder = new File("saves");
         File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".json"));
 
         return files;
     }
 
-    private void addButtons() {
+    public void addButtons() {
+
+        this.removeAll();
+        File[] saves = fetchSaves();
 
         if (saves == null) {
             this.add(new JLabel("No saved simulations found."));
@@ -54,7 +44,7 @@ public class SimulationSelectScene extends Scene {
             button.addActionListener(e -> {
                 String path = save.getPath();
                 this.dataManager.deserialize(path);
-                SceneManager.getInstance().setScene(SceneID.SIMULATION);
+                SceneManager.getInstance().setScene(SceneID.SIMULATION, false);
             });
 
             this.add(button);

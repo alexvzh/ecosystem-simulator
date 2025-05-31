@@ -2,6 +2,7 @@ package fifty.group.entity;
 
 import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Drawable;
+import fifty.group.entity.entities.Grass;
 
 import java.awt.*;
 

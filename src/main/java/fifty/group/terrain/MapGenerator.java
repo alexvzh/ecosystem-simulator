@@ -1,13 +1,9 @@
 package fifty.group.terrain;
 
 public class MapGenerator {
-    private final OpenSimplexNoise noise;
 
-    public MapGenerator(long seed) {
-        this.noise = new OpenSimplexNoise(10);
-    }
-
-    public int[][] generateMap(int width, int height, double scale, double threshold) {
+    public int[][] generateMap(int width, int height, double scale, double threshold, long seed) {
+        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
         int[][] map = new int[height][width];
 
         for (int y = 0; y < height; y++) {

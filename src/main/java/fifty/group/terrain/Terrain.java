@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Terrain {
 
-    @Expose private ArrayList<Tile> tileList;
+    private ArrayList<Tile> tileList;
     private final MapGenerator mapGenerator;
 
     private final Random random;
@@ -16,8 +16,7 @@ public class Terrain {
     public Terrain() {
         this.tileList = new ArrayList<>();
         this.random = new Random();
-        this.mapGenerator = new MapGenerator(random.nextLong());
-        initTiles();
+        this.mapGenerator = new MapGenerator();
     }
 
     public void drawTileLayer(Graphics2D g2d) {
@@ -27,8 +26,9 @@ public class Terrain {
         }
     }
 
-    private void initTiles() {
-        int[][] integerList = mapGenerator.generateMap(45, 26, 0.2, 0);
+    public void init() {
+        this.tileList.clear();
+        int[][] integerList = mapGenerator.generateMap(45, 26, 0.2, 0, random.nextLong());
 
         int x = 0;
         int y = 0;
@@ -36,27 +36,13 @@ public class Terrain {
         for (int i = 0; i < integerList.length-1; i++) {
             for (int j = 0; j < integerList[i].length-1; j++) {
                 TileType type = integerList[i][j] == 1 ? TileType.GRASS : TileType.DIRT;
-                tileList.add(new Tile(x, y, type, getTileNeighbours(i, j, integerList)));
+                this.tileList.add(new Tile(x, y, type, getTileNeighbours(i, j, integerList)));
                 x += 32;
             }
             y += 32;
             x = 0;
         }
 
-    }
-
-    public int[][] generateRandomMap(int width, int height) {
-        int[][] map = new int[height][width];
-
-        int probability = 30 + random.nextInt(41);
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                map[y][x] = (random.nextInt(100) < probability) ? 1 : 0;
-            }
-        }
-
-        return map;
     }
 
     private java.util.List<TileType> getTileNeighbours(int y, int x, int[][] integerMap) {

@@ -5,8 +5,7 @@ import fifty.group.entity.EntityHostility;
 import fifty.group.entity.EntitySize;
 import fifty.group.entity.LivingEntity;
 
-public class Sheep extends LivingEntity
-{
+public class Sheep extends LivingEntity {
     public Sheep(int x, int y, EntityHandler entityHandler) {
         super(x, y, entityHandler);
         retrieveSprites(2, 0, "/Sheep.png");

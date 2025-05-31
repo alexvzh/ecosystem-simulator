@@ -11,11 +11,13 @@ public class SimulationState {
     @Expose private ArrayList<Tile> tileList;
     @Expose private List<Entity> entityList;
     @Expose private int time;
+    @Expose private int day;
 
-    public SimulationState(ArrayList<Tile> tileList, List<Entity> entityList, int time) {
+    public SimulationState(ArrayList<Tile> tileList, List<Entity> entityList, int time, int day) {
         this.tileList = tileList;
         this.entityList = entityList;
         this.time = time;
+        this.day = day;
     }
 
     public ArrayList<Tile> getTileList() {
@@ -28,5 +30,9 @@ public class SimulationState {
 
     public int getTime() {
         return time;
+    }
+
+    public int getDay() {
+        return day;
     }
 }

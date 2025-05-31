@@ -2,7 +2,6 @@ package fifty.group.entity.entities;
 
 import fifty.group.entity.*;
 import fifty.group.scene.SceneManager;
-import fifty.group.scene.scenes.SimulationScene;
 import fifty.group.terrain.*;
 
 public class Raccoon extends LivingEntity {
@@ -15,14 +14,12 @@ public class Raccoon extends LivingEntity {
         setStats(new EntityStats(this, 1000, 1000, 10, 20));
     }
 
-
     @Override
     public void updateBehaviour() {
-        Terrain terrain = ((SimulationScene)SceneManager.getInstance().getCurrentScene()).getTerrain();
+        Terrain terrain = SceneManager.getInstance().getTerrain();
         Tile tile = terrain.getTile((int) x + 48, (int) y + 48);
         if (tile != null) {
             tile.growGrass();
         }
     }
-
 }
