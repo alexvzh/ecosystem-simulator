@@ -4,11 +4,11 @@ import fifty.group.entity.EntityHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public abstract class Scene extends JPanel {
-
-    private final EntityHandler entityHandler;
     private SceneID sceneID;
+    protected EntityHandler entityHandler;
 
     protected Scene() {
 
@@ -34,7 +34,7 @@ public abstract class Scene extends JPanel {
     protected abstract void draw(Graphics2D g2d);
 
     public EntityHandler getEntityHandler() {
-        return entityHandler;
+        return this.entityHandler;
     }
 
     protected SceneID getID() {
@@ -43,5 +43,12 @@ public abstract class Scene extends JPanel {
 
     protected void setID(SceneID sceneID) {
         this.sceneID = sceneID;
+    }
+
+    public void addButton(int x, int y, int width, int height, String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, width, height);
+        button.addActionListener(actionListener);
+        this.add(button);
     }
 }

@@ -1,7 +1,7 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Hoverable;
-import fifty.group.entity.entities.Grass;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,24 +14,25 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     private static final int SIZE = 48;
 
-    private EntityState state;
-    private EntityStats stats;
-    private EntitySize size;
-    private EntityHostility hostility;
-    private double velX;
-    private double velY;
+    @Expose private double velX;
+    @Expose private double velY;
 
-    private int tickCounter;
-    private int frameCounter;
-    private int nextChangeTime;
+    @Expose private EntitySize size;
+    @Expose private EntityState state;
+    @Expose private EntityStats stats;
+    @Expose private EntityHostility hostility;
+
+    @Expose private int tickCounter;
+    @Expose private int frameCounter;
+    @Expose private int nextChangeTime;
 
     private boolean isHovered;
 
-    BufferedImage imageToDraw;
-    ArrayList<BufferedImage> images;
-    int offset;
+    private int offset;
+    private BufferedImage imageToDraw;
+    private ArrayList<BufferedImage> images;
 
-    private final Random random;
+    private Random random;
 
     protected Entity target;
 
@@ -42,8 +43,10 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         this.tickCounter = 0;
         this.frameCounter = 0;
         this.images = new ArrayList<>();
-        this.stats = new EntityStats(this, 100, 100, 4, 5);
+        this.stats = new EntityStats(this, 100, 200, 4, 5);
     }
+
+    public abstract void reproduce();
 
     public void draw(Graphics2D g2d) {
         g2d.drawImage(imageToDraw, (int) x, (int) y, null);
@@ -51,22 +54,20 @@ public abstract class LivingEntity extends Entity implements Hoverable {
             drawHealthBar(g2d);
             drawHungerBar(g2d);
         }
-//        g2d.draw(getFOV());
-//        g2d.draw(getBoundingBox());
     }
 
     private void drawHealthBar(Graphics2D g2d) {
         g2d.setColor(Color.RED);
         g2d.fillRect((int) x, (int) y - 12, 50, 5);
         g2d.setColor(Color.GREEN);
-        g2d.fillRect((int) x, (int) y - 12, stats.getHealth() / 2, 5);
+        g2d.fillRect((int) x, (int) y - 12, stats.getHealth() / (stats.getMaxHealth() / 50), 5);
     }
 
     private void drawHungerBar(Graphics2D g2d) {
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.BLACK);
         g2d.fillRect((int) x, (int) y - 5, 50, 5);
         g2d.setColor(Color.YELLOW);
-        g2d.fillRect((int) x, (int) y - 5, stats.getHunger() / 2, 5);
+        g2d.fillRect((int) x, (int) y - 5, stats.getHunger() / (stats.getMaxHunger() / 50), 5);
     }
 
     public void onHover() {
@@ -105,39 +106,9 @@ public abstract class LivingEntity extends Entity implements Hoverable {
     }
 
     private void updateGenericBehaviour() {
-        if (hostility.equals(EntityHostility.HOSTILE)) {
-            updateHostileBehaviour();
-            if (target != null)
-                damagePray();
-        } else if (hostility.equals(EntityHostility.PASSIVE)) {
-            updatePassiveBehaviour();
-            if (target != null)
-                eatGrass();
-        }
-    }
+        if (stats.getHunger() > stats.getMaxHunger()/4*3) return;
+        Entity targetEntity = hostility.equals(EntityHostility.HOSTILE) ? entityHandler.getVisiblePray(this) : entityHandler.getVisibleGrass(this);
 
-    private void damagePray() {
-        if (tickCounter % 100 != 0) return;
-        if (this.getBoundingBox().intersects(target.getBoundingBox())) {
-            ((LivingEntity)target).getStats().damage(this.getStats().getDamage());
-            if (((LivingEntity)target).getStats().getHealth() < 0) {
-                this.getStats().applyEatBonus();
-                entityHandler.removeEntity(target);
-                target = null;
-                state = EntityState.SEARCHING;
-            }
-        }
-    }
-
-    private void eatGrass() {
-        if (this.getBoundingBox().intersects(target.getBoundingBox())) {
-            this.getStats().applyEatBonus();
-            entityHandler.removeEntity(target);
-        }
-    }
-
-    private void updateHostileBehaviour() {
-        Entity targetEntity = entityHandler.getVisiblePray(this);
         if (targetEntity == null) {
             state = EntityState.SEARCHING;
             stats.setSpeed(stats.getMaxSpeed() / 2);
@@ -147,20 +118,39 @@ public abstract class LivingEntity extends Entity implements Hoverable {
             stats.setSpeed(stats.getMaxSpeed());
             this.target = targetEntity;
         }
-}
 
-    private void updatePassiveBehaviour() {
-        Entity targetEntity = entityHandler.getVisibleEntity(this);
-        if (targetEntity == null) {
-            state = EntityState.SEARCHING;
-            stats.setSpeed(stats.getMaxSpeed() / 2);
-        } else if (targetEntity instanceof Grass){
-            state = EntityState.MOVING;
-            stats.setSpeed(stats.getMaxSpeed());
-            this.target = targetEntity;
+        if (target == null) return;
+
+        if (hostility.equals(EntityHostility.HOSTILE)) {
+                damagePray();
+        } else if (hostility.equals(EntityHostility.PASSIVE)) {
+                eatGrass();
         }
     }
 
+    private void damagePray() {
+        if (tickCounter % 10 != 0) return;
+        if (this.getBoundingBox().intersects(target.getBoundingBox())) {
+            ((LivingEntity)target).getStats().damage(this.getStats().getDamage());
+            if (((LivingEntity)target).getStats().getHealth() < 0) {
+                consumeEntity();
+            }
+        }
+    }
+
+    private void eatGrass() {
+        if (this.getBoundingBox().intersects(target.getBoundingBox())) {
+            consumeEntity();
+        }
+    }
+
+    private void consumeEntity() {
+        this.getStats().applyEatBonus();
+        entityHandler.removeEntity(target);
+        target = null;
+        state = EntityState.SEARCHING;
+        stats.setSpeed(stats.getMaxSpeed()/2);
+    }
 
     private void updateFrameCounter() {
         if (tickCounter % (40 / stats.getSpeed()) == 0) {
@@ -257,7 +247,7 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         return stats;
     }
 
-    protected void retrieveSprites(int xIndex, int yIndex, String path) {
+    public void retrieveSprites(int xIndex, int yIndex, String path) {
         int col = xIndex * 3;
         int row = yIndex * 4;
         BufferedImage spriteSheet;
@@ -284,5 +274,13 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     protected void setStats(EntityStats stats) {
         this.stats = stats;
+    }
+
+    public void setImages(ArrayList<BufferedImage> images) {
+        this.images = images;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
     }
 }

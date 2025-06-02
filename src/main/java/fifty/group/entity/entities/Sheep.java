@@ -5,12 +5,18 @@ import fifty.group.entity.EntityHostility;
 import fifty.group.entity.EntitySize;
 import fifty.group.entity.LivingEntity;
 
-public class Sheep extends LivingEntity
-{
+public class Sheep extends LivingEntity {
     public Sheep(int x, int y, EntityHandler entityHandler) {
         super(x, y, entityHandler);
         retrieveSprites(2, 0, "/Sheep.png");
         setSize(EntitySize.MEDIUM);
         setHostility(EntityHostility.PASSIVE);
     }
+
+    @Override
+    public void reproduce() {
+        new Sheep((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
+    }
+
 }

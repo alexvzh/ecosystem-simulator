@@ -23,17 +23,20 @@ public class MouseListener implements MouseMotionListener {
     @Override
     public void mouseMoved(MouseEvent e) {
         Hoverable entity = entityHandler.getEntity(e.getPoint());
-        if (currentEntity == entity) return;
+        if (currentEntity == entity)
+            return;
 
         if (entity == null) {
             currentEntity.onUnhover();
         } else {
             entity.onHover();
+            if (currentEntity != null) currentEntity.onUnhover();
         }
 
         currentEntity = entity;
+    }
 
-
-
+    public void setEntityHandler(EntityHandler entityHandler) {
+        this.entityHandler = entityHandler;
     }
 }

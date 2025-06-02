@@ -1,17 +1,18 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.*;
 import fifty.group.scene.SceneManager;
 
 public class EntityStats {
+    @Expose private int health;
+    @Expose private int maxHealth;
+    @Expose private int hunger;
+    @Expose private int maxHunger;
+    @Expose private int speed;
+    @Expose private int maxSpeed;
+    @Expose private int damage;
 
     private final LivingEntity entity;
-    private int health;
-    private int maxHealth;
-    private int hunger;
-    private int maxHunger;
-    private int speed;
-    private int maxSpeed;
-    private int damage;
 
     public EntityStats(LivingEntity entity, int maxHealth, int maxHunger, int maxSpeed, int damage) {
         this.entity = entity;
@@ -19,7 +20,7 @@ public class EntityStats {
         this.maxHealth = maxHealth;
         this.hunger = maxHunger;
         this.maxHunger = maxHunger;
-        this.speed = maxSpeed;
+        this.speed = maxSpeed/2;
         this.maxSpeed = maxSpeed;
         this.damage = damage;
     }

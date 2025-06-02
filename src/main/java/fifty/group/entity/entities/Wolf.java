@@ -12,6 +12,9 @@ public class Wolf extends LivingEntity {
     }
 
     @Override
-    public void updateBehaviour() {
+    public void reproduce() {
+        new Wolf((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
     }
+
 }

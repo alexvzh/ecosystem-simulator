@@ -13,4 +13,11 @@ public class Rabbit extends LivingEntity {
         setSize(EntitySize.SMALL);
         setHostility(EntityHostility.PASSIVE);
     }
+
+    @Override
+    public void reproduce() {
+        new Rabbit((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
+    }
+
 }

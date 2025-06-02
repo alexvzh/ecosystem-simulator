@@ -1,13 +1,19 @@
 package fifty.group.entity;
 
+import com.google.gson.annotations.*;
 import fifty.group.entity.behaviour.Drawable;
+import fifty.group.entity.entities.Grass;
 
 import java.awt.*;
 
 public abstract class Entity implements Drawable {
 
+    @Expose
     protected double x;
+
+    @Expose
     protected double y;
+
     protected EntityHandler entityHandler;
 
     protected Entity(double x, double y, EntityHandler entityHandler) {
@@ -35,5 +41,9 @@ public abstract class Entity implements Drawable {
 
     public Rectangle getBoundingBox() {
         return new Rectangle((int) x, (int) y, 48, 48);
+    }
+
+    public void setEntityHandler(EntityHandler entityHandler) {
+        this.entityHandler = entityHandler;
     }
 }

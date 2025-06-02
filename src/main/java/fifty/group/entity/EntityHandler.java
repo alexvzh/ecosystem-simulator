@@ -5,10 +5,11 @@ import fifty.group.entity.entities.Grass;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EntityHandler {
 
-    private final ArrayList<Entity> entities;
+    private final List<Entity> entities;
 
     public EntityHandler() {
         entities = new ArrayList<>();
@@ -38,6 +39,10 @@ public class EntityHandler {
     }
 
     public void addEntity(Entity entity) {
+        if (entity instanceof Grass) {
+            entities.add(0, entity);
+            return;
+        }
         this.entities.add(entity);
     }
 
@@ -57,7 +62,8 @@ public class EntityHandler {
         return null;
     }
 
-    public Entity getVisibleEntity(LivingEntity entity) {
+    public Entity getVisibleGrass(LivingEntity entity) {
+        if (entity.target != null && entity.getBoundingBox().intersects(entity.target.getBoundingBox())) return entity.target;
         for (Entity target : entities) {
             if (!(target instanceof Grass)) continue;
             if (entity.getFOV().intersects(target.getBoundingBox())) return target;
@@ -65,4 +71,16 @@ public class EntityHandler {
         return null;
     }
 
+    public void reproduceEligibleEntities() {
+        for (Entity entity : entities) {
+            if (!(entity instanceof LivingEntity)) continue;
+            LivingEntity livingEntity = (LivingEntity) entity;
+            if (livingEntity.getStats().getHunger() < livingEntity.getStats().getMaxHunger() * 0.75) continue;
+            livingEntity.reproduce();
+        }
+    }
+
+    public List<Entity> getEntityList() {
+        return entities;
+    }
 }
