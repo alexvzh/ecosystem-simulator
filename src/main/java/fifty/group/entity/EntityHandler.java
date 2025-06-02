@@ -71,6 +71,15 @@ public class EntityHandler {
         return null;
     }
 
+    public void reproduceEligibleEntities() {
+        for (Entity entity : entities) {
+            if (!(entity instanceof LivingEntity)) continue;
+            LivingEntity livingEntity = (LivingEntity) entity;
+            if (livingEntity.getStats().getHunger() < livingEntity.getStats().getMaxHunger() * 0.75) continue;
+            livingEntity.reproduce();
+        }
+    }
+
     public List<Entity> getEntityList() {
         return entities;
     }

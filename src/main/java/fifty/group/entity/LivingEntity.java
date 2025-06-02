@@ -46,6 +46,8 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         this.stats = new EntityStats(this, 100, 200, 4, 5);
     }
 
+    public abstract void reproduce();
+
     public void draw(Graphics2D g2d) {
         g2d.drawImage(imageToDraw, (int) x, (int) y, null);
         if (isHovered) {

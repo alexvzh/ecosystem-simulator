@@ -14,4 +14,10 @@ public class Fox extends LivingEntity {
         setHostility(EntityHostility.HOSTILE);
     }
 
+    @Override
+    public void reproduce() {
+        new Fox((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
+    }
+
 }

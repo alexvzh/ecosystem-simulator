@@ -11,4 +11,10 @@ public class Wolf extends LivingEntity {
         setHostility(EntityHostility.HOSTILE);
     }
 
+    @Override
+    public void reproduce() {
+        new Wolf((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
+    }
+
 }

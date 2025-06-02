@@ -15,6 +15,12 @@ public class Raccoon extends LivingEntity {
     }
 
     @Override
+    public void reproduce() {
+        new Raccoon((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
+    }
+
+    @Override
     public void updateBehaviour() {
         Terrain terrain = SceneManager.getInstance().getTerrain();
         Tile tile = terrain.getTile((int) x + 48, (int) y + 48);

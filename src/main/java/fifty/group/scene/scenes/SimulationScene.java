@@ -31,6 +31,10 @@ public class SimulationScene extends Scene {
         this.addMouseMotionListener(mouseListener);
         this.dataManager.setEntityHandler(this.entityHandler);
         addButtons();
+
+        this.timeManager.onDayStart(() -> {
+            this.entityHandler.reproduceEligibleEntities();
+        });
     }
 
     @Override

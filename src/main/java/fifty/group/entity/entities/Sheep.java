@@ -13,4 +13,10 @@ public class Sheep extends LivingEntity {
         setHostility(EntityHostility.PASSIVE);
     }
 
+    @Override
+    public void reproduce() {
+        new Sheep((int) x, (int) y, entityHandler);
+        this.getStats().applyReproductionTax();
+    }
+
 }

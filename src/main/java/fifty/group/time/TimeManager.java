@@ -1,6 +1,8 @@
 package fifty.group.time;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TimeManager {
 
@@ -11,9 +13,12 @@ public class TimeManager {
     private final Font font;
     private int shadeValue;
     private int transitionShadeValue;
+    private final List<Runnable> dayStartListeners;
+
 
     public TimeManager() {
         this.font = new Font("Monospaced", Font.PLAIN, 30);
+        this.dayStartListeners = new ArrayList<>();
     }
 
     public void update() {
@@ -26,6 +31,10 @@ public class TimeManager {
         drawShade(g2d);
         drawClock(g2d);
         drawDay(g2d);
+    }
+
+    public void onDayStart(Runnable listener) {
+        dayStartListeners.add(listener);
     }
 
     private void updateTime() {
@@ -80,6 +89,10 @@ public class TimeManager {
         shadeValue = 0;
         transitionShadeValue = 0;
         day++;
+
+        for (Runnable listener : dayStartListeners) {
+            listener.run();
+        }
     }
 
     private void endDay() {
