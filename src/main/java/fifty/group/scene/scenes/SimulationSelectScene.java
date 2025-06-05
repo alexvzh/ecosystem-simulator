@@ -11,13 +11,10 @@ import java.io.File;
 
 public class SimulationSelectScene extends Scene {
 
-    private final DataManager dataManager;
-
-    public SimulationSelectScene(DataManager dataManager) {
+    public SimulationSelectScene() {
         setID(SceneID.SIMULATION_SELECT);
         addButtons();
 
-        this.dataManager = dataManager;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
     }
@@ -43,7 +40,7 @@ public class SimulationSelectScene extends Scene {
             JButton button = new JButton(save.getName());
             button.addActionListener(e -> {
                 String path = save.getPath();
-                this.dataManager.deserialize(path);
+                DataManager.getInstance().deserialize(path);
                 SceneManager.getInstance().setScene(SceneID.SIMULATION, false);
             });
 

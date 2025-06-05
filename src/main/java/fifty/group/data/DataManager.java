@@ -18,13 +18,13 @@ import java.util.*;
 
 public class DataManager {
 
-    private final Terrain terrain;
-    private final TimeManager timeManager;
+    private static DataManager instance;
+
+    private Terrain terrain;
+    private TimeManager timeManager;
     private EntityHandler entityHandler;
 
-    public DataManager(Terrain terrain, TimeManager timeManager) {
-        this.terrain = terrain;
-        this.timeManager = timeManager;
+    private DataManager() {
     }
 
     public void serialize(SimulationState state) {
@@ -81,7 +81,7 @@ public class DataManager {
             if (entity instanceof LivingEntity) {
                 LivingEntity livingEntity = (LivingEntity) entity;
                 livingEntity.setRandom(new Random());
-                livingEntity.setImages(new ArrayList<>());
+                livingEntity.setSprites(new ArrayList<>());
 
                 if (livingEntity instanceof Fox) {
                     livingEntity.retrieveSprites(0, 0, "/Fox.png");
@@ -100,7 +100,7 @@ public class DataManager {
         }
     }
 
-    public void saveJsonToFile(String json, String filePath) {
+    private void saveJsonToFile(String json, String filePath) {
         try {
             // Create the parent directories if they don't exist
             File file = new File(filePath);
@@ -127,7 +127,7 @@ public class DataManager {
         }
     }
 
-    public String loadJsonFromFile(String filePath) {
+    private String loadJsonFromFile(String filePath) {
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -150,15 +150,22 @@ public class DataManager {
         }
     }
 
-    public Terrain getTerrain() {
-        return terrain;
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
     }
 
-    public EntityHandler getEntityHandler() {
-        return entityHandler;
+    public void setTimeManager(TimeManager timeManager) {
+        this.timeManager = timeManager;
     }
 
     public void setEntityHandler(EntityHandler entityHandler) {
         this.entityHandler = entityHandler;
+    }
+
+    public static DataManager getInstance() {
+        if (instance == null) {
+            instance = new DataManager();
+        }
+        return instance;
     }
 }

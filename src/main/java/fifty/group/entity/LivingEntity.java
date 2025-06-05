@@ -12,7 +12,7 @@ import java.util.Random;
 
 public abstract class LivingEntity extends Entity implements Hoverable {
 
-    private static final int SIZE = 48;
+    private static final int SPRITE_SIZE = 48;
 
     @Expose private double velX;
     @Expose private double velY;
@@ -28,9 +28,9 @@ public abstract class LivingEntity extends Entity implements Hoverable {
 
     private boolean isHovered;
 
-    private int offset;
-    private BufferedImage imageToDraw;
-    private ArrayList<BufferedImage> images;
+    private int spriteOffset;
+    private BufferedImage spritesToDraw;
+    private ArrayList<BufferedImage> sprites;
 
     private Random random;
 
@@ -42,14 +42,14 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         this.state = EntityState.SEARCHING;
         this.tickCounter = 0;
         this.frameCounter = 0;
-        this.images = new ArrayList<>();
+        this.sprites = new ArrayList<>();
         this.stats = new EntityStats(this, 100, 200, 4, 5);
     }
 
     public abstract void reproduce();
 
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(imageToDraw, (int) x, (int) y, null);
+        g2d.drawImage(spritesToDraw, (int) x, (int) y, null);
         if (isHovered) {
             drawHealthBar(g2d);
             drawHungerBar(g2d);
@@ -160,11 +160,11 @@ public abstract class LivingEntity extends Entity implements Hoverable {
     }
 
     private void restrictPosition() {
-        if (x <= 0 || x  + SIZE >= 1400) {
+        if (x <= 0 || x  + SPRITE_SIZE >= 1400) {
             velX = -velX;
         }
 
-        if (y <= 0 || y  + SIZE >= 800) {
+        if (y <= 0 || y  + SPRITE_SIZE >= 800) {
             velY = -velY;
         }
 
@@ -178,18 +178,18 @@ public abstract class LivingEntity extends Entity implements Hoverable {
     }
 
     private void updateImage() {
-        int imageIndex = frameCounter + offset;
+        int imageIndex = frameCounter + spriteOffset;
 
-        imageToDraw = images.get(imageIndex);
+        spritesToDraw = sprites.get(imageIndex);
     }
 
     private void calculateOffset() {
         if (Math.abs(velX) > Math.abs(velY)) {
-            offset = (velX > 0) ? 2 : 1;
+            spriteOffset = (velX > 0) ? 2 : 1;
         } else {
-            offset = (velY > 0) ? 0 : 3;
+            spriteOffset = (velY > 0) ? 0 : 3;
         }
-        offset *= 3;
+        spriteOffset *= 3;
     }
 
     private void updateDirection() {
@@ -257,9 +257,9 @@ public abstract class LivingEntity extends Entity implements Hoverable {
             return;
         }
 
-        for (int y = row * SIZE; y < (row + 4) * SIZE; y += SIZE) {
-            for (int x = col * SIZE; x < (col + 3) * SIZE; x += SIZE) {
-                images.add(spriteSheet.getSubimage(x, y, SIZE, SIZE));
+        for (int y = row * SPRITE_SIZE; y < (row + 4) * SPRITE_SIZE; y += SPRITE_SIZE) {
+            for (int x = col * SPRITE_SIZE; x < (col + 3) * SPRITE_SIZE; x += SPRITE_SIZE) {
+                sprites.add(spriteSheet.getSubimage(x, y, SPRITE_SIZE, SPRITE_SIZE));
             }
         }
     }
@@ -276,8 +276,8 @@ public abstract class LivingEntity extends Entity implements Hoverable {
         this.stats = stats;
     }
 
-    public void setImages(ArrayList<BufferedImage> images) {
-        this.images = images;
+    public void setSprites(ArrayList<BufferedImage> sprites) {
+        this.sprites = sprites;
     }
 
     public void setRandom(Random random) {

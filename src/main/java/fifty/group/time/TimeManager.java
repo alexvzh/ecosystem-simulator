@@ -64,19 +64,19 @@ public class TimeManager {
         shadeValue = (time - 400) / 4;
     }
 
-    public void drawClock(Graphics2D g2d) {
+    private void drawClock(Graphics2D g2d) {
         g2d.setFont(font);
         g2d.setColor(Color.WHITE);
         g2d.drawString(clockString, 150, 30);
     }
 
-    public void drawDay(Graphics2D g2d) {
+    private void drawDay(Graphics2D g2d) {
         g2d.setFont(font);
         g2d.setColor(Color.WHITE);
         g2d.drawString("Day " + day, 20, 30);
     }
 
-    public void drawShade(Graphics2D g2d) {
+    private void drawShade(Graphics2D g2d) {
         int finalShadeValue = shadeValue + transitionShadeValue;
         if (finalShadeValue > 255) finalShadeValue = 255;
         g2d.setColor(new Color(0, 0, 0, finalShadeValue));

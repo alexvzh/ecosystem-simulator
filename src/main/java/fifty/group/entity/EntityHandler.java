@@ -29,15 +29,6 @@ public class EntityHandler {
         }
     }
 
-    public Hoverable getEntity(Point p) {
-        for (Entity entity : entities) {
-            if (!(entity instanceof Hoverable)) continue;
-            if (entity.getBoundingBox().contains(p))
-                return (Hoverable)entity;
-        }
-        return null;
-    }
-
     public void addEntity(Entity entity) {
         if (entity instanceof Grass) {
             entities.add(0, entity);
@@ -48,6 +39,15 @@ public class EntityHandler {
 
     public void removeEntity(Entity entity) {
         this.entities.remove(entity);
+    }
+
+    public Hoverable getEntity(Point p) {
+        for (Entity entity : entities) {
+            if (!(entity instanceof Hoverable)) continue;
+            if (entity.getBoundingBox().contains(p))
+                return (Hoverable)entity;
+        }
+        return null;
     }
 
     public Entity getVisiblePray(LivingEntity entity) {

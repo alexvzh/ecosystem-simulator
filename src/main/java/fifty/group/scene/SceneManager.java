@@ -26,12 +26,12 @@ public class SceneManager {
         this.scenes = new ArrayList<>();
         this.running = true;
 
-
         this.terrain = new Terrain();
         this.timeManager = new TimeManager();
-        this.dataManager = new DataManager(terrain, timeManager);
+        this.dataManager = DataManager.getInstance();
 
         initScenes();
+        initDataManager();
 
         currentScene = getSceneByID(SceneID.MENU);
     }
@@ -113,8 +113,14 @@ public class SceneManager {
 
     private void initScenes() {
         scenes.add(new MenuScene());
-        scenes.add(new SimulationScene(this.terrain, this.dataManager, this.timeManager));
-        scenes.add(new SimulationSelectScene(this.dataManager));
+        scenes.add(new SimulationScene(this.terrain, this.timeManager));
+        scenes.add(new SimulationSelectScene());
+    }
+
+    private void initDataManager() {
+        dataManager.setTimeManager(timeManager);
+        dataManager.setTerrain(terrain);
+        dataManager.setEntityHandler(getSceneByID(SceneID.SIMULATION).getEntityHandler());
     }
 
     public void initialize(JFrame window) {

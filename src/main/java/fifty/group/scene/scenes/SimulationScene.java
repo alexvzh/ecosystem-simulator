@@ -18,18 +18,15 @@ public class SimulationScene extends Scene {
 
     private final Random random;
     private final Terrain terrain;
-    private final DataManager dataManager;
     private final TimeManager timeManager;
 
-    public SimulationScene(Terrain terrain, DataManager dataManager, TimeManager timeManager) {
+    public SimulationScene(Terrain terrain, TimeManager timeManager) {
         setID(SceneID.SIMULATION);
         this.random = new Random();
         this.terrain = terrain;
-        this.dataManager = dataManager;
         this.timeManager = timeManager;
         MouseListener mouseListener = new MouseListener(entityHandler);
         this.addMouseMotionListener(mouseListener);
-        this.dataManager.setEntityHandler(this.entityHandler);
         addButtons();
 
         this.timeManager.onDayStart(() -> {
@@ -104,7 +101,7 @@ public class SimulationScene extends Scene {
 
 
         addButton(15 + buttonWidth + 15, (int) (windowHeight - buttonHeight * 1.5), buttonWidth, buttonHeight, "Save", e-> {
-            this.dataManager.serialize(new SimulationState(terrain.getTileList(), entityHandler.getEntityList(), timeManager.getTime(), timeManager.getDay()));
+            DataManager.getInstance().serialize(new SimulationState(terrain.getTileList(), entityHandler.getEntityList(), timeManager.getTime(), timeManager.getDay()));
         });
 
         addButton(15 + (buttonWidth + 15) * 2, (int) (windowHeight - buttonHeight * 1.5), buttonWidth, buttonHeight, "Exit", e-> {
