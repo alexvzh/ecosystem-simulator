@@ -103,7 +103,7 @@ public class TimeManager {
     }
 
     public void init() {
-        this.time = 850;
+        this.time = 0;
         this.day = 1;
         this.tickCounter = 0;
         this.clockString = "";
