@@ -8,11 +8,9 @@ import java.awt.*;
 
 public abstract class Entity implements Drawable {
 
-    @Expose
-    protected double x;
+    @Expose protected double x;
 
-    @Expose
-    protected double y;
+    @Expose protected double y;
 
     protected EntityHandler entityHandler;
 
