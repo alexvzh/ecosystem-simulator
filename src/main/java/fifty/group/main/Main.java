@@ -1,5 +1,6 @@
 package fifty.group.main;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import fifty.group.scene.SceneID;
 import fifty.group.scene.SceneManager;
@@ -10,7 +11,7 @@ import java.util.Collections;
 public class Main {
     public static void main(String[] args) {
 
-        FlatMacDarkLaf.setup();
+        FlatDarkLaf.setup();
 
         JFrame window = new JFrame();
 

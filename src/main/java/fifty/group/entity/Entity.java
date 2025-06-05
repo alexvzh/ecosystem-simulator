@@ -9,9 +9,7 @@ import java.awt.*;
 public abstract class Entity implements Drawable {
 
     @Expose protected double x;
-
     @Expose protected double y;
-
     protected EntityHandler entityHandler;
 
     protected Entity(double x, double y, EntityHandler entityHandler) {
