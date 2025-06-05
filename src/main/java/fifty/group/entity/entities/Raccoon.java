@@ -15,10 +15,7 @@ public class Raccoon extends LivingEntity {
     }
 
     @Override
-    public void reproduce() {
-        new Raccoon((int) x, (int) y, entityHandler);
-        this.getStats().applyReproductionTax();
-    }
+    public void reproduce() {}
 
     @Override
     public void updateBehaviour() {

@@ -67,7 +67,7 @@ public class TimeManager {
     public void drawClock(Graphics2D g2d) {
         g2d.setFont(font);
         g2d.setColor(Color.WHITE);
-        g2d.drawString(clockString, 130, 30);
+        g2d.drawString(clockString, 150, 30);
     }
 
     public void drawDay(Graphics2D g2d) {
@@ -103,7 +103,7 @@ public class TimeManager {
     }
 
     public void init() {
-        this.time = 0;
+        this.time = 850;
         this.day = 1;
         this.tickCounter = 0;
         this.clockString = "";
