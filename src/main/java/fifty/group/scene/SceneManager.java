@@ -71,17 +71,9 @@ public class SceneManager {
             }
 
             if (System.currentTimeMillis() - fpsTimer >= 1000) {
-                System.out.println("FPS: " + frames + " | UPS: " + updates);
                 fpsTimer += 1000;
                 frames = 0;
                 updates = 0;
-            }
-
-            // Save CPU...
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
